@@ -92,7 +92,6 @@ while(True):
             solution_text = re.sub('<\w*\s*(\w+=\"(\w+\s*|\w+-\w+)\")*>', "", solution_text)
             solution_text = solution_text.replace("\\", "")
 
-
             with open(s_file_name, 'w') as w:
                 w.write(solution_text)
 
