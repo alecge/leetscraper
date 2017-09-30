@@ -23,6 +23,8 @@ driver.implicitly_wait(3)
 
 driver.get('https://leetcode.com/problemset/all/')
 
+
+
 driver.implicitly_wait(3)
 show_all_elements = driver.find_element_by_xpath('//*[@id="question-app"]/div/div[2]/div[2]/div[2]/table/tbody[2]/tr/td/span/select')
 
@@ -63,17 +65,6 @@ while(True):
         w.write(descText.text)
 
 
-    driver.back()
-    driver.implicitly_wait(2)
-    pNumber += 1
-
-
-
-
-#driver.close()
-
-
-    """
     solutionTab = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[1]/nav/a[5]')
     solutionTab.click()
     solution = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[2]/div/div[2]/div[1]/div')
@@ -86,16 +77,15 @@ while(True):
 
     solution_text = solution.get_attribute('innerHTML')
 
-    solution_text = re.sub('<span class="[\w+ \w+]*">', "", solution_text)
-    solution_text = re.sub('</span>', '', solution_text)
-
-    #solution_text = solution_text.replace("</span>", "")
-    solution_text = solution_text.replace("<em>", "")
-    solution_text = solution_text.replace("</em>", "")
+    solution_text = re.sub('<\w*\s*(\w+=\"(\w+\s*|\w+-\w+)\")*>', "", solution_text)
     solution_text = solution_text.replace("\\", "")
+
     print(solution_text)
 
 
     with open(s_file_name, 'w') as w:
         w.write(solution_text)
-    """
+
+    driver.back()
+    driver.implicitly_wait(2)
+    pNumber += 1
