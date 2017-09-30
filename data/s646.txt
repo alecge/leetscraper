@@ -1,0 +1,127 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-1-brute-force-accepted">Approach #1: Brute Force [Accepted]</a></li>
+<a href="#approach-2-ad-hoc-accepted">Approach #2: Ad-Hoc [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-1-brute-force-accepted">Approach #1: Brute Force [Accepted]</h4>
+Intuition and Algorithm</strong></p>
+Traverse the tree with a depth-first search, and record every unique value in the tree using a Set structure uniques</code>.</p>
+Then, we'll look through the recorded values for the second minimum.  The first minimum must be <span class="maths katex-rendered">r</mi>o</mi>o</mi>t</mi>.</mi>v</mi>a</mi>l</mi></mtext></mrow><annotation encoding="application/x-tex">text{root.val}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">root.val</span></span></span></span></span></span>.</p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> void</span> dfs</span>(</span>TreeNode</span> root</span>,</span> Set</span>&lt;</span>Integer</span>&gt;</span> uniques</span>)</span> {</span>
+        if</span> (</span>root</span> !=</span> null</span>)</span> {</span>
+            uniques</span>.</span>add</span>(</span>root</span>.</span>val</span>);</span>
+            dfs</span>(</span>root</span>.</span>left</span>,</span> uniques</span>);</span>
+            dfs</span>(</span>root</span>.</span>right</span>,</span> uniques</span>);</span>
+        }</span>
+    }</span>
+    public</span> int</span> findSecondMinimumValue</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        Set</span>&lt;</span>Integer</span>&gt;</span> uniques</span> =</span> new</span> HashSet</span>&lt;</span>Integer</span>&gt;();</span>
+        dfs</span>(</span>root</span>,</span> uniques</span>);</span>
+
+        int</span> min1</span> =</span> root</span>.</span>val</span>;</span>
+        long</span> ans</span> =</span> Long</span>.</span>MAX_VALUE</span>;</span>
+        for</span> (</span>int</span> v</span> :</span> uniques</span>)</span> {</span>
+            if</span> (</span>min1</span> &lt;</span> v</span> &amp;&amp;</span> v</span> &lt;</span> ans</span>)</span> ans</span> =</span> v</span>;</span>
+        }</span>
+        return</span> ans</span> &lt;</span> Long</span>.</span>MAX_VALUE</span> ?</span> (</span>int</span>)</span> ans</span> :</span> -</span>1</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Python</strong></p>
+</span>class</span> Solution</span>(</span>object</span>):</span>
+    def</span> findSecondMinimumValue</span>(</span>self</span>,</span> root</span>):</span>
+        def</span> dfs</span>(</span>node</span>):</span>
+            if</span> node</span>:</span>
+                uniques</span>.</span>add</span>(</span>node</span>.</span>val</span>)</span>
+                dfs</span>(</span>node</span>.</span>left</span>)</span>
+                dfs</span>(</span>node</span>.</span>right</span>)</span>
+
+        uniques</span> =</span> set</span>()</span>
+        dfs</span>(</span>root</span>)</span>
+
+        min1</span>,</span> ans</span> =</span> root</span>.</span>val</span>,</span> float</span>(</span>'inf'</span>)</span>
+        for</span> v</span> in</span> uniques</span>:</span>
+            if</span> min1</span> &lt;</span> v</span> &lt;</span> ans</span>:</span>
+                ans</span> =</span> v</span>
+
+        return</span> ans</span> if</span> ans</span> &lt;</span> float</span>(</span>'inf'</span>)</span> else</span> -</span>1</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity:  <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the total number of nodes in the given tree.  We visit each node exactly once, and scan through the <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span> values in unique</code> once.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>, the information stored in uniques</code>.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-ad-hoc-accepted">Approach #2: Ad-Hoc [Accepted]</h4>
+Intuition and Algorithm</strong></p>
+Let <span class="maths katex-rendered">m</mi>i</mi>n</mi>1</mn>&nbsp;</mtext>=</mi>&nbsp;</mtext>r</mi>o</mi>o</mi>t</mi>.</mi>v</mi>a</mi>l</mi></mtext></mrow><annotation encoding="application/x-tex">text{min1 = root.val}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">min1&nbsp;=&nbsp;root.val</span></span></span></span></span></span>.  When traversing the tree at some node, <span class="maths katex-rendered">n</mi>o</mi>d</mi>e</mi></mtext></mrow><annotation encoding="application/x-tex">text{node}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">node</span></span></span></span></span></span>, if <span class="maths katex-rendered">text{node.val &gt; min1}</span><script type="math/tex">text{node.val > min1}</script></span>, we know all values in the subtree at <span class="maths katex-rendered">n</mi>o</mi>d</mi>e</mi></mtext></mrow><annotation encoding="application/x-tex">text{node}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">node</span></span></span></span></span></span> are at least <span class="maths katex-rendered">n</mi>o</mi>d</mi>e</mi>.</mi>v</mi>a</mi>l</mi></mtext></mrow><annotation encoding="application/x-tex">text{node.val}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">node.val</span></span></span></span></span></span>, so there cannot be a better candidate for the second minimum in this subtree.  Thus, we do not need to search this subtree.</p>
+Also, as we only care about the second minimum <span class="maths katex-rendered">a</mi>n</mi>s</mi></mtext></mrow><annotation encoding="application/x-tex">text{ans}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">ans</span></span></span></span></span></span>, we do not need to record any values that are larger than our current candidate for the second minimum, so unlike Approach #1 we can skip maintaining a Set of values(uniques</code>) entirely.</p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    int</span> min1</span>;</span>
+    long</span> ans</span> =</span> Long</span>.</span>MAX_VALUE</span>;</span>
+
+    public</span> void</span> dfs</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        if</span> (</span>root</span> !=</span> null</span>)</span> {</span>
+            if</span> (</span>min1</span> &lt;</span> root</span>.</span>val</span> &amp;&amp;</span> root</span>.</span>val</span> &lt;</span> ans</span>)</span> {</span>
+                ans</span> =</span> root</span>.</span>val</span>;</span>
+            }</span> else</span> if</span> (</span>min1</span> ==</span> root</span>.</span>val</span>)</span> {</span>
+                dfs</span>(</span>root</span>.</span>left</span>);</span>
+                dfs</span>(</span>root</span>.</span>right</span>);</span>
+            }</span>
+        }</span>
+    }</span>
+    public</span> int</span> findSecondMinimumValue</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        min1</span> =</span> root</span>.</span>val</span>;</span>
+        dfs</span>(</span>root</span>);</span>
+        return</span> ans</span> &lt;</span> Long</span>.</span>MAX_VALUE</span> ?</span> (</span>int</span>)</span> ans</span> :</span> -</span>1</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Python</strong></p>
+</span>def</span> findSecondMinimumValue</span>(</span>self</span>,</span> root</span>):</span>
+    self</span>.</span>ans</span> =</span> float</span>(</span>'inf'</span>)</span>
+    min1</span> =</span> root</span>.</span>val</span>
+
+    def</span> dfs</span>(</span>node</span>):</span>
+        if</span> node</span>:</span>
+            if</span> min1</span> &lt;</span> node</span>.</span>val</span> &lt;</span> self</span>.</span>ans</span>:</span>
+                self</span>.</span>ans</span> =</span> node</span>.</span>val</span>
+            elif</span> node</span>.</span>val</span> ==</span> min1</span>:</span>
+                dfs</span>(</span>node</span>.</span>left</span>)</span>
+                dfs</span>(</span>node</span>.</span>right</span>)</span>
+
+    dfs</span>(</span>root</span>)</span>
+    return</span> self</span>.</span>ans</span> if</span> self</span>.</span>ans</span> &lt;</span> float</span>(</span>'inf'</span>)</span> else</span> -</span>1</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity:  <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the total number of nodes in the given tree.  We visit each node at most once.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>.  The information stored in <span class="maths katex-rendered">a</mi>n</mi>s</mi></mtext></mrow><annotation encoding="application/x-tex">text{ans}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">ans</span></span></span></span></span></span> and <span class="maths katex-rendered">m</mi>i</mi>n</mi>1</mn></mtext></mrow><annotation encoding="application/x-tex">text{min1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.66786em;"></span><span class="strut bottom" style="height: 0.66786em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">min1</span></span></span></span></span></span> is <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>, but our depth-first search may store up to <span class="maths katex-rendered">O</mi>(</mo>h</mi>)</mo>=</mo>O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(h) = O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">h</span>)</span>=</span><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span> information in the call stack, where <span class="maths katex-rendered">h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">h</span></span></span></span></span> is the height of the tree.</p>
+</li>
+</ul>
+
+Analysis written by: <a href="https://leetcode.com/awice">@awice</a></p>

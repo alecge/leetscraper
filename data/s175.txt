@@ -1,0 +1,25 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-outer-join-accepted">Approach: Using outer join [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-outer-join-accepted">Approach: Using outer join</code> [Accepted]</h4>
+Algorithm</strong></p>
+Since the PersonId</em> in table Address</strong> is the foreign key of table Person</strong>, we can join this two table to get the address information of a person.</p>
+Considering there might not be an address information for every person, we should use outer join</code> instead of the default inner join</code>.</p>
+MySQL</strong></p>
+</span>select</span> FirstName</span>,</span> LastName</span>,</span> City</span>,</span> State</span>
+from</span> Person</span> left</span> join</span> Address</span>
+on</span> Person</span>.</span>PersonId</span> =</span> Address</span>.</span>PersonId</span>
+;</span>
+</pre></div>
+
+
+
+Note: Using where</code> clause to filter the records will fail if there is no address information for a person because it will not display the name information.</p>
+</blockquote>

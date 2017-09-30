@@ -1,0 +1,272 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-i-using-where-clause-accepted">Approach I: Using WHERE clause [Accepted]</a></li>
+<a href="#approach-i-using-join-clause-accepted">Approach I: Using JOIN clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-i-using-where-clause-accepted">Approach I: Using WHERE</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+As this table has the employee's manager information, we probably need to select information from it twice.</p>
+</span>SELECT</span> *</span>
+FROM</span> Employee</span> AS</span> a</span>,</span> Employee</span> AS</span> b</span>
+;</span>
+</pre></div>
+
+
+
+Note: The keyword 'AS' is optional.</p>
+</blockquote>
+
+
+
+Id</th>
+Name</th>
+Salary</th>
+ManagerId</th>
+Id</th>
+Name</th>
+Salary</th>
+ManagerId</th>
+</tr>
+</thead>
+
+
+1</td>
+Joe</td>
+70000</td>
+3</td>
+1</td>
+Joe</td>
+70000</td>
+3</td>
+</tr>
+
+2</td>
+Henry</td>
+80000</td>
+4</td>
+1</td>
+Joe</td>
+70000</td>
+3</td>
+</tr>
+
+3</td>
+Sam</td>
+60000</td>
+</td>
+1</td>
+Joe</td>
+70000</td>
+3</td>
+</tr>
+
+4</td>
+Max</td>
+90000</td>
+</td>
+1</td>
+Joe</td>
+70000</td>
+3</td>
+</tr>
+
+1</td>
+Joe</td>
+70000</td>
+3</td>
+2</td>
+Henry</td>
+80000</td>
+4</td>
+</tr>
+
+2</td>
+Henry</td>
+80000</td>
+4</td>
+2</td>
+Henry</td>
+80000</td>
+4</td>
+</tr>
+
+3</td>
+Sam</td>
+60000</td>
+</td>
+2</td>
+Henry</td>
+80000</td>
+4</td>
+</tr>
+
+4</td>
+Max</td>
+90000</td>
+</td>
+2</td>
+Henry</td>
+80000</td>
+4</td>
+</tr>
+
+1</td>
+Joe</td>
+70000</td>
+3</td>
+3</td>
+Sam</td>
+60000</td>
+</td>
+</tr>
+
+2</td>
+Henry</td>
+80000</td>
+4</td>
+3</td>
+Sam</td>
+60000</td>
+</td>
+</tr>
+
+3</td>
+Sam</td>
+60000</td>
+</td>
+3</td>
+Sam</td>
+60000</td>
+</td>
+</tr>
+
+4</td>
+Max</td>
+90000</td>
+</td>
+3</td>
+Sam</td>
+60000</td>
+</td>
+</tr>
+
+1</td>
+Joe</td>
+70000</td>
+3</td>
+4</td>
+Max</td>
+90000</td>
+</td>
+</tr>
+
+2</td>
+Henry</td>
+80000</td>
+4</td>
+4</td>
+Max</td>
+90000</td>
+</td>
+</tr>
+
+3</td>
+Sam</td>
+60000</td>
+</td>
+4</td>
+Max</td>
+90000</td>
+</td>
+</tr>
+
+4</td>
+Max</td>
+90000</td>
+</td>
+4</td>
+Max</td>
+90000</td>
+</td>
+</tr>
+
+&gt; The first 3 columns are from a and the last 3 ones are from b.</td>
+</td>
+</td>
+</td>
+</td>
+</td>
+</td>
+</td>
+</tr>
+</tbody>
+</table>
+Select from two tables will get the <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a> of these two tables. In this case, the output will be 4*4 = 16 records. However, what we interest is the employee's salary higher than his/her manager. So we should add two conditions in a WHERE</code> clause like below.</p>
+</span>SELECT</span>
+    *</span>
+FROM</span>
+    Employee</span> AS</span> a</span>,</span>
+    Employee</span> AS</span> b</span>
+WHERE</span>
+    a</span>.</span>ManagerId</span> =</span> b</span>.</span>Id</span>
+        AND</span> a</span>.</span>Salary</span> &gt;</span> b</span>.</span>Salary</span>
+;</span>
+</pre></div>
+
+
+
+
+
+Id</th>
+Name</th>
+Salary</th>
+ManagerId</th>
+Id</th>
+Name</th>
+Salary</th>
+ManagerId</th>
+</tr>
+</thead>
+
+
+1</td>
+Joe</td>
+70000</td>
+3</td>
+3</td>
+Sam</td>
+60000</td>
+</td>
+</tr>
+</tbody>
+</table>
+As we only need to output the employee's name, so we modify the above code a little to get a solution.</p>
+MySQL</strong></p>
+</span>SELECT</span>
+    a</span>.</span>Name</span> AS</span> 'Employee'</span>
+FROM</span>
+    Employee</span> AS</span> a</span>,</span>
+    Employee</span> AS</span> b</span>
+WHERE</span>
+    a</span>.</span>ManagerId</span> =</span> b</span>.</span>Id</span>
+        AND</span> a</span>.</span>Salary</span> &gt;</span> b</span>.</span>Salary</span>
+;</span>
+</pre></div>
+
+
+<h4 id="approach-i-using-join-clause-accepted">Approach I: Using JOIN</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+Actually, JOIN</code> is a more common and efficient way to link tables together, and we can use ON</code> to specify some conditions.</p>
+</span>SELECT</span>
+     a</span>.</span>NAME</span> AS</span> Employee</span>
+FROM</span> Employee</span> AS</span> a</span> JOIN</span> Employee</span> AS</span> b</span>
+     ON</span> a</span>.</span>ManagerId</span> =</span> b</span>.</span>Id</span>
+     AND</span> a</span>.</span>Salary</span> &gt;</span> b</span>.</span>Salary</span>
+;</span>
+</pre></div>

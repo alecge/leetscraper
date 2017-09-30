@@ -1,0 +1,107 @@
+<div class="toc hide">
+
+<a href="#approach-1-categorize-by-sorted-string-accepted">Approach #1: Categorize by Sorted String [Accepted]</a></li>
+<a href="#approach-2-categorize-by-count-accepted">Approach #2: Categorize by Count [Accepted]</a></li>
+</ul>
+</div>
+<h4 id="approach-1-categorize-by-sorted-string-accepted">Approach #1: Categorize by Sorted String [Accepted]</h4>
+Intuition</strong></p>
+Two strings are anagrams if and only if their sorted strings are equal.</p>
+Algorithm</strong></p>
+Maintain a map ans : {String -&gt; List}</code> where each key <span class="maths katex-rendered">K</mi></mtext></mrow><annotation encoding="application/x-tex">text{K}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">K</span></span></span></span></span></span> is a sorted string, and each value is the list of strings from the initial input that when sorted, are equal to <span class="maths katex-rendered">K</mi></mtext></mrow><annotation encoding="application/x-tex">text{K}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">K</span></span></span></span></span></span>.</p>
+In Java, we will store the key as a string, eg. code</code>.  In Python, we will store the key as a hashable tuple, eg. ('c', 'o', 'd', 'e')</code>.</p>
+<img alt="Anagrams" src="../Figures/49_groupanagrams1.png"></p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> List</span>&lt;</span>List</span>&lt;</span>String</span>&gt;&gt;</span> groupAnagrams</span>(</span>String</span>[]</span> strs</span>)</span> {</span>
+        if</span> (</span>strs</span>.</span>length</span> ==</span> 0</span>)</span> return</span> new</span> ArrayList</span>();</span>
+        Map</span>&lt;</span>String</span>,</span> List</span>&gt;</span> ans</span> =</span> new</span> HashMap</span>&lt;</span>String</span>,</span> List</span>&gt;();</span>
+        for</span> (</span>String</span> s</span> :</span> strs</span>)</span> {</span>
+            char</span>[]</span> ca</span> =</span> s</span>.</span>toCharArray</span>();</span>
+            Arrays</span>.</span>sort</span>(</span>ca</span>);</span>
+            String</span> key</span> =</span> String</span>.</span>valueOf</span>(</span>ca</span>);</span>
+            if</span> (!</span>ans</span>.</span>containsKey</span>(</span>key</span>))</span> ans</span>.</span>put</span>(</span>key</span>,</span> new</span> ArrayList</span>());</span>
+            ans</span>.</span>get</span>(</span>key</span>).</span>add</span>(</span>s</span>);</span>
+        }</span>
+        return</span> new</span> ArrayList</span>(</span>ans</span>.</span>values</span>());</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Python</strong></p>
+</span>class</span> Solution</span>(</span>object</span>):</span>
+    def</span> groupAnagrams</span>(</span>self</span>,</span> strs</span>):</span>
+        ans</span> =</span> collections</span>.</span>defaultdict</span>(</span>list</span>)</span>
+        for</span> s</span> in</span> strs</span>:</span>
+            ans</span>[</span>tuple</span>(</span>sorted</span>(</span>s</span>))]</span>.</span>append</span>(</span>s</span>)</span>
+        return</span> ans</span>.</span>values</span>()</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity:  <span class="maths katex-rendered">O</mi>(</mo>N</mi>K</mi>log</mi>(</mo>K</mi>)</mo>)</mo></mrow><annotation encoding="application/x-tex">O(NK log (K) )</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>lo<span style="margin-right: 0.01389em;">g</span></span>(</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>)</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the length of strs</code>, and <span class="maths katex-rendered">K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.07153em;">K</span></span></span></span></span> is the maximum length of a string in strs</code>.  The outer loop has complexity <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span> as we iterate through each string.  Then, we sort each string in <span class="maths katex-rendered">O</mi>(</mo>K</mi>log</mi>K</mi>)</mo></mrow><annotation encoding="application/x-tex">O(K log K)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>lo<span style="margin-right: 0.01389em;">g</span></span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>)</span></span></span></span></span> time.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>∗</mo>K</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N*K)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>∗</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>)</span></span></span></span></span>, the total information content stored in ans</code>.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-categorize-by-count-accepted">Approach #2: Categorize by Count [Accepted]</h4>
+Intuition</strong></p>
+Two strings are anagrams if and only if their character counts (respective number of occurrences of each character) are the same.</p>
+Algorithm</strong></p>
+We can transform each string <span class="maths katex-rendered">s</mi></mtext></mrow><annotation encoding="application/x-tex">text{s}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">s</span></span></span></span></span></span> into a character count, <span class="maths katex-rendered">c</mi>o</mi>u</mi>n</mi>t</mi></mtext></mrow><annotation encoding="application/x-tex">text{count}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.61508em;"></span><span class="strut bottom" style="height: 0.61508em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">count</span></span></span></span></span></span>, consisting of 26 non-negative integers representing the number of <span class="maths katex-rendered">a</mi></mtext></mrow><annotation encoding="application/x-tex">text{a}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">a</span></span></span></span></span></span>'s, <span class="maths katex-rendered">b</mi></mtext></mrow><annotation encoding="application/x-tex">text{b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">b</span></span></span></span></span></span>'s, <span class="maths katex-rendered">c</mi></mtext></mrow><annotation encoding="application/x-tex">text{c}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">c</span></span></span></span></span></span>'s, etc.  We use these counts as the basis for our hash map.</p>
+In Java, the hashable representation of our count will be a string delimited with '#</strong>' characters.  For example, abbccc</code> will be #1#2#3#0#0#0...#0</code> where there are 26 entries total.  In python, the representation will be a tuple of the counts.  For example, abbccc</code> will be (1, 2, 3, 0, 0, ..., 0)</code>, where again there are 26 entries total.</p>
+<img alt="Anagrams" src="../Figures/49_groupanagrams2.png"></p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> List</span>&lt;</span>List</span>&lt;</span>String</span>&gt;&gt;</span> groupAnagrams</span>(</span>String</span>[]</span> strs</span>)</span> {</span>
+        if</span> (</span>strs</span>.</span>length</span> ==</span> 0</span>)</span> return</span> new</span> ArrayList</span>();</span>
+        Map</span>&lt;</span>String</span>,</span> List</span>&gt;</span> ans</span> =</span> new</span> HashMap</span>&lt;</span>String</span>,</span> List</span>&gt;();</span>
+        int</span>[]</span> count</span> =</span> new</span> int</span>[</span>26</span>];</span>
+        for</span> (</span>String</span> s</span> :</span> strs</span>)</span> {</span>
+            Arrays</span>.</span>fill</span>(</span>count</span>,</span> 0</span>);</span>
+            for</span> (</span>char</span> c</span> :</span> s</span>.</span>toCharArray</span>())</span> count</span>[</span>c</span> -</span> 'a'</span>]++;</span>
+
+            StringBuilder</span> sb</span> =</span> new</span> StringBuilder</span>(</span>""</span>);</span>
+            for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> 26</span>;</span> i</span>++)</span> {</span>
+                sb</span>.</span>append</span>(</span>'#'</span>);</span>
+                sb</span>.</span>append</span>(</span>count</span>[</span>i</span>]);</span>
+            }</span>
+            String</span> key</span> =</span> sb</span>.</span>toString</span>();</span>
+            if</span> (!</span>ans</span>.</span>containsKey</span>(</span>key</span>))</span> ans</span>.</span>put</span>(</span>key</span>,</span> new</span> ArrayList</span>());</span>
+            ans</span>.</span>get</span>(</span>key</span>).</span>add</span>(</span>s</span>);</span>
+        }</span>
+        return</span> new</span> ArrayList</span>(</span>ans</span>.</span>values</span>());</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Python</strong></p>
+</span>class</span> Solution</span>:</span>
+    def</span> groupAnagrams</span>(</span>strs</span>):</span>
+        ans</span> =</span> collections</span>.</span>defaultdict</span>(</span>list</span>)</span>
+        for</span> s</span> in</span> strs</span>:</span>
+            count</span> =</span> [</span>0</span>]</span> *</span> 26</span>
+            for</span> c</span> in</span> s</span>:</span>
+                count</span>[</span>ord</span>(</span>c</span>)</span> -</span> ord</span>(</span>'a'</span>)]</span> +=</span> 1</span>
+            ans</span>[</span>tuple</span>(</span>count</span>)]</span>.</span>append</span>(</span>s</span>)</span>
+        return</span> ans</span>.</span>values</span>()</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity:  <span class="maths katex-rendered">O</mi>(</mo>N</mi>∗</mo>K</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N * K)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>∗</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the length of strs</code>, and <span class="maths katex-rendered">K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.07153em;">K</span></span></span></span></span> is the maximum length of a string in strs</code>.  Counting each string is linear in the size of the string, and we count every string.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>∗</mo>K</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N*K)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>∗</span><span class="mord mathit" style="margin-right: 0.07153em;">K</span>)</span></span></span></span></span>, the total information content stored in ans</code>.</p>
+</li>
+</ul>
+
+Analysis written by: <a href="https://leetcode.com/awice">@awice</a></p>

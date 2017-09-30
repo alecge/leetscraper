@@ -1,0 +1,21 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-update-and-casewhen-accepted">Approach: Using UPDATE and CASE...WHEN [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-update-and-casewhen-accepted">Approach: Using UPDATE</code> and CASE...WHEN</code> [Accepted]</h4>
+Algorithm</strong></p>
+To dynamically set a value to a column, we can use <a href="https://dev.mysql.com/doc/refman/5.7/en/update.html">UPDATE</code></a> statement together when <a href="https://dev.mysql.com/doc/refman/5.7/en/case.html">CASE...WHEN...</code></a> flow control statement.</p>
+MySQL</strong></p>
+</span>UPDATE</span> salary</span>
+SET</span>
+    sex</span> =</span> CASE</span> sex</span>
+        WHEN</span> 'm'</span> THEN</span> 'f'</span>
+        ELSE</span> 'm'</span>
+    END</span>;</span>
+</pre></div>

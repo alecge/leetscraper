@@ -1,0 +1,72 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-distinct-and-where-clause-accepted">Approach: Using DISTINCT and WHERE clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-distinct-and-where-clause-accepted">Approach: Using DISTINCT</code> and WHERE</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+Consecutive appearing means the Id of the Num are next to each others. Since this problem asks for numbers appearing at least three times consecutively, we can use 3 aliases for this table Logs</strong>, and then check whether 3 consecutive numbers are all the same.</p>
+</span>SELECT</span> *</span>
+FROM</span>
+    Logs</span> l1</span>,</span>
+    Logs</span> l2</span>,</span>
+    Logs</span> l3</span>
+WHERE</span>
+    l1</span>.</span>Id</span> =</span> l2</span>.</span>Id</span> -</span> 1</span>
+    AND</span> l2</span>.</span>Id</span> =</span> l3</span>.</span>Id</span> -</span> 1</span>
+    AND</span> l1</span>.</span>Num</span> =</span> l2</span>.</span>Num</span>
+    AND</span> l2</span>.</span>Num</span> =</span> l3</span>.</span>Num</span>
+;</span>
+</pre></div>
+
+
+
+
+
+Id</th>
+Num</th>
+Id</th>
+Num</th>
+Id</th>
+Num</th>
+</tr>
+</thead>
+
+
+1</td>
+1</td>
+2</td>
+1</td>
+3</td>
+1</td>
+</tr>
+
+&gt;Note: The first two columns are from l1, then the next two are from l2, and the last two are from l3.</td>
+</td>
+</td>
+</td>
+</td>
+</td>
+</tr>
+</tbody>
+</table>
+Then we can select any Num</em> column from the above table to get the target data. However, we need to add a keyword DISTINCT</code> because it will display a duplicated number if one number appears more than 3 times consecutively.</p>
+MySQL</strong></p>
+</span>SELECT</span> DISTINCT</span>
+    l1</span>.</span>Num</span> AS</span> ConsecutiveNums</span>
+FROM</span>
+    Logs</span> l1</span>,</span>
+    Logs</span> l2</span>,</span>
+    Logs</span> l3</span>
+WHERE</span>
+    l1</span>.</span>Id</span> =</span> l2</span>.</span>Id</span> -</span> 1</span>
+    AND</span> l2</span>.</span>Id</span> =</span> l3</span>.</span>Id</span> -</span> 1</span>
+    AND</span> l1</span>.</span>Num</span> =</span> l2</span>.</span>Num</span>
+    AND</span> l2</span>.</span>Num</span> =</span> l3</span>.</span>Num</span>
+;</span>
+</pre></div>

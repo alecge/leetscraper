@@ -1,0 +1,91 @@
+<div class="toc hide">
+
+<a href="#summary">Summary</a></li>
+<a href="#solution">Solution</a>
+<a href="#approach-1-brute-force-time-limit-exceeded">Approach #1 Brute Force [Time Limit Exceeded]</a></li>
+<a href="#approach-2-single-pass-approach-accepted">Approach #2 Single Pass Approach [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Summary</h2>
+We need to find the next lexicographic permutation of the given list of numbers than the number formed by the given array.</p>
+Solution</h2>
+
+<h4 id="approach-1-brute-force-time-limit-exceeded">Approach #1 Brute Force [Time Limit Exceeded]</h4>
+Algorithm</strong></p>
+In this approach, we find out every possible permutation of list formed by the elements of the given array and find out the permutation which is
+just larger than the given one. But this one will be a very naive approach, since it requires us to find out every possible permutation
+ which will take really long time and the implementation is complex.
+ Thus, this approach is not acceptable at all. Hence, we move on directly to the correct approach.</p>
+Complexity Analysis</strong></p>
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>!</mo>)</mo></mrow><annotation encoding="application/x-tex">O(n!)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>!</span>)</span></span></span></span></span>. Total possible permutations is <span class="maths katex-rendered">n</mi>!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span>!</span></span></span></span></span>.</li>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Since an array will be used to store the permutations.</li>
+</ul>
+
+<h4 id="approach-2-single-pass-approach-accepted">Approach #2 Single Pass Approach [Accepted]</h4>
+Algorithm</strong></p>
+First, we observe that for any given sequence that is in descending order, no next larger permutation is possible.
+ For example, no next permutation is possible for the following array:
+ [9, 5, 4, 3, 1]</code></p>
+We need to find the first pair of two successive numbers <span class="maths katex-rendered">a</mi>[</mo>i</mi>]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>]</span></span></span></span></span> and <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span>, from the right, which satisfy
+ <span class="maths katex-rendered">a</mi>[</mo>i</mi>]</mo>&gt;</mo>a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i] &gt; a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>]</span>&gt;</span><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span>. Now, no rearrangements to the right of <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> can create a larger permutation since that subarray consists of numbers in descending order.
+ Thus, we need to rearrange the numbers to the right of <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> including itself.</p>
+Now, what kind of rearrangement will produce the next larger number? We want to create the permutation just larger than the current one. Therefore, we need to replace the number <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> with the number which is just larger than itself among the numbers lying to its right section, say <span class="maths katex-rendered">a</mi>[</mo>j</mi>]</mo></mrow><annotation encoding="application/x-tex">a[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span></span></span></span></span>.</p>
+<img alt=" Next Permutation " src="https://leetcode.com/media/original_images/31_nums_graph.png"></p>
+We swap the numbers <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> and <span class="maths katex-rendered">a</mi>[</mo>j</mi>]</mo></mrow><annotation encoding="application/x-tex">a[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span></span></span></span></span>. We now have the correct number at index <span class="maths katex-rendered">i</mi>−</mo>1</mn></mrow><annotation encoding="application/x-tex">i-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.74285em; vertical-align: -0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span></span></span></span></span>. But still the current permutation isn't the permutation
+    that we are looking for. We need the smallest permutation that can be formed by using the numbers only to the right of <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span>. Therefore, we need to place those
+     numbers in ascending order to get their smallest permutation.</p>
+But, recall that while scanning the numbers from the right, we simply kept decrementing the index
+      until we found the pair <span class="maths katex-rendered">a</mi>[</mo>i</mi>]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>]</span></span></span></span></span> and <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> where,  <span class="maths katex-rendered">a</mi>[</mo>i</mi>]</mo>&gt;</mo>a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i] &gt; a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>]</span>&gt;</span><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span>. Thus, all numbers to the right of <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> were already sorted in descending order.
+      Furthermore, swapping <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> and <span class="maths katex-rendered">a</mi>[</mo>j</mi>]</mo></mrow><annotation encoding="application/x-tex">a[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span></span></span></span></span> didn't change that order.
+      Therefore, we simply need to reverse the numbers following <span class="maths katex-rendered">a</mi>[</mo>i</mi>−</mo>1</mn>]</mo></mrow><annotation encoding="application/x-tex">a[i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span></span></span></span></span> to get the next smallest lexicographic permutation.</p>
+The following animation will make things clearer:</p>
+<img alt="Next Permutation" src="https://leetcode.com/media/original_images/31_Next_Permutation.gif"></p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> void</span> nextPermutation</span>(</span>int</span>[]</span> nums</span>)</span> {</span>
+        int</span> i</span> =</span> nums</span>.</span>length</span> -</span> 2</span>;</span>
+        while</span> (</span>i</span> &gt;=</span> 0</span> &amp;&amp;</span> nums</span>[</span>i</span> +</span> 1</span>]</span> &lt;=</span> nums</span>[</span>i</span>])</span> {</span>
+            i</span>--;</span>
+        }</span>
+        if</span> (</span>i</span> &gt;=</span> 0</span>)</span> {</span>
+            int</span> j</span> =</span> nums</span>.</span>length</span> -</span> 1</span>;</span>
+            while</span> (</span>j</span> &gt;=</span> 0</span> &amp;&amp;</span> nums</span>[</span>j</span>]</span> &lt;=</span> nums</span>[</span>i</span>])</span> {</span>
+                j</span>--;</span>
+            }</span>
+            swap</span>(</span>nums</span>,</span> i</span>,</span> j</span>);</span>
+        }</span>
+        reverse</span>(</span>nums</span>,</span> i</span> +</span> 1</span>);</span>
+    }</span>
+
+    private</span> void</span> reverse</span>(</span>int</span>[]</span> nums</span>,</span> int</span> start</span>)</span> {</span>
+        int</span> i</span> =</span> start</span>,</span> j</span> =</span> nums</span>.</span>length</span> -</span> 1</span>;</span>
+        while</span> (</span>i</span> &lt;</span> j</span>)</span> {</span>
+            swap</span>(</span>nums</span>,</span> i</span>,</span> j</span>);</span>
+            i</span>++;</span>
+            j</span>--;</span>
+        }</span>
+    }</span>
+
+    private</span> void</span> swap</span>(</span>int</span>[]</span> nums</span>,</span> int</span> i</span>,</span> int</span> j</span>)</span> {</span>
+        int</span> temp</span> =</span> nums</span>[</span>i</span>];</span>
+        nums</span>[</span>i</span>]</span> =</span> nums</span>[</span>j</span>];</span>
+        nums</span>[</span>j</span>]</span> =</span> temp</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. In worst case, only two scans of the whole array are needed.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>. No extra space is used. In place replacements are done.</p>
+</li>
+</ul>
+
+Analysis written by: <a href="https://leetcode.com/vinod23">@vinod23</a></p>

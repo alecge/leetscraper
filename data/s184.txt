@@ -1,0 +1,58 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-join-and-in-clause-accepted">Approach: Using JOIN and IN clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-join-and-in-clause-accepted">Approach: Using JOIN</code> and IN</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+Since the Employee</strong> table contains the Salary</em> and DepartmentId</em> information, we can query the highest salary in a department.</p>
+</span>SELECT</span>
+    DepartmentId</span>,</span> MAX</span>(</span>Salary</span>)</span>
+FROM</span>
+    Employee</span>
+GROUP</span> BY</span> DepartmentId</span>;</span>
+</pre></div>
+
+
+
+Note: There might be multiple employees having the same highest salary, so it is safe not to include the employee name information in this query.</p>
+</blockquote>
+</span>| DepartmentId | MAX(Salary) |
+|--------------|-------------|
+| 1            | 90000       |
+| 2            | 80000       |
+</pre></div>
+
+
+Then, we can join table Employee</strong> and Department</strong>, and query the (DepartmentId, Salary) are in the temp table using IN</code> statement as below.</p>
+MySQL</strong></p>
+</span>SELECT</span>
+    Department</span>.</span>name</span> AS</span> 'Department'</span>,</span>
+    Employee</span>.</span>name</span> AS</span> 'Employee'</span>,</span>
+    Salary</span>
+FROM</span>
+    Employee</span>
+        JOIN</span>
+    Department</span> ON</span> Employee</span>.</span>DepartmentId</span> =</span> Department</span>.</span>Id</span>
+WHERE</span>
+    (</span>Employee</span>.</span>DepartmentId</span> ,</span> Salary</span>)</span> IN</span>
+    (</span>   SELECT</span>
+            DepartmentId</span>,</span> MAX</span>(</span>Salary</span>)</span>
+        FROM</span>
+            Employee</span>
+        GROUP</span> BY</span> DepartmentId</span>
+    )</span>
+;</span>
+</pre></div>
+
+
+</span>| Department | Employee | Salary |
+|------------|----------|--------|
+| Sales      | Henry    | 80000  |
+| IT         | Max      | 90000  |
+</pre></div>

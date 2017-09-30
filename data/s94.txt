@@ -1,0 +1,187 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-1-recursive-approach-accepted">Approach #1 Recursive Approach [Accepted]</a></li>
+<a href="#approach-2-iterating-method-using-stack-accepted">Approach #2 Iterating method using Stack [Accepted]</a></li>
+<a href="#approach-3-morris-traversal-accepted">Approach #3 Morris Traversal [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-1-recursive-approach-accepted">Approach #1 Recursive Approach [Accepted]</h4>
+The first method to solve this problem is using recursion.
+This is the classical method and is straightforward. We can define a helper function to implement recursion.</p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> List</span> &lt;</span> Integer</span> &gt;</span> inorderTraversal</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        List</span> &lt;</span> Integer</span> &gt;</span> res</span> =</span> new</span> ArrayList</span> &lt;</span> &gt;</span> ();</span>
+        helper</span>(</span>root</span>,</span> res</span>);</span>
+        return</span> res</span>;</span>
+    }</span>
+
+    public</span> void</span> helper</span>(</span>TreeNode</span> root</span>,</span> List</span> &lt;</span> Integer</span> &gt;</span> res</span>)</span> {</span>
+        if</span> (</span>root</span> !=</span> null</span>)</span> {</span>
+            if</span> (</span>root</span>.</span>left</span> !=</span> null</span>)</span> {</span>
+                helper</span>(</span>root</span>.</span>left</span>,</span> res</span>);</span>
+            }</span>
+            res</span>.</span>add</span>(</span>root</span>.</span>val</span>);</span>
+            if</span> (</span>root</span>.</span>right</span> !=</span> null</span>)</span> {</span>
+                helper</span>(</span>root</span>.</span>right</span>,</span> res</span>);</span>
+            }</span>
+        }</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. The time complexity is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span> because the recursive function is <span class="maths katex-rendered">T</mi>(</mo>n</mi>)</mo>=</mo>2</mn>∗</mo>T</mi>(</mo>n</mi>/</mi>2</mn>)</mo>+</mo>1</mn></mrow><annotation encoding="application/x-tex">T(n) = 2*T(n/2)+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">n</span>)</span>=</span><span class="mord mathrm">2</span>∗</span><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">n</span><span class="mord mathrm">/</span><span class="mord mathrm">2</span>)</span>+</span><span class="mord mathrm">1</span></span></span></span></span>.</p>
+</li>
+
+Space complexity : The worst case space required is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>, and in the average case it's <span class="maths katex-rendered">O</mi>(</mo>l</mi>o</mi>g</mi>(</mo>n</mi>)</mo>)</mo></mrow><annotation encoding="application/x-tex">O(log(n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right: 0.03588em;">g</span>(</span><span class="mord mathit">n</span>)</span>)</span></span></span></span></span> where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex"> n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is number of nodes.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-iterating-method-using-stack-accepted">Approach #2 Iterating method using Stack [Accepted]</h4>
+The strategy is very similiar to the first method, the different is using stack.</p>
+Here is an illustration:</p>
+<div class="diaporama" style="width: 940px; height: 529px;"><div class="initial-play play-container"><div class="fa fa-play"></div></div><canvas width="940" height="529" style="width: 940px; height: 529px;"></canvas></div><div class="control-panel" style="width: 940px;"><div class="control-group dia-back fa fa-step-backward"></div><div class="toggle-play control-group fa fa-play"></div><div class="control-group fa fa-step-forward"></div></div>1 / 14</div></div></div>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> List</span> &lt;</span> Integer</span> &gt;</span> inorderTraversal</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        List</span> &lt;</span> Integer</span> &gt;</span> res</span> =</span> new</span> ArrayList</span> &lt;</span> &gt;</span> ();</span>
+        Stack</span> &lt;</span> TreeNode</span> &gt;</span> stack</span> =</span> new</span> Stack</span> &lt;</span> &gt;</span> ();</span>
+        TreeNode</span> curr</span> =</span> root</span>;</span>
+        while</span> (</span>curr</span> !=</span> null</span> ||</span> !</span>stack</span>.</span>isEmpty</span>())</span> {</span>
+            while</span> (</span>curr</span> !=</span> null</span>)</span> {</span>
+                stack</span>.</span>push</span>(</span>curr</span>);</span>
+                curr</span> =</span> curr</span>.</span>left</span>;</span>
+            }</span>
+            curr</span> =</span> stack</span>.</span>pop</span>();</span>
+            res</span>.</span>add</span>(</span>curr</span>.</span>val</span>);</span>
+            curr</span> =</span> curr</span>.</span>right</span>;</span>
+        }</span>
+        return</span> res</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. </p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</p>
+</li>
+</ul>
+
+<h4 id="approach-3-morris-traversal-accepted">Approach #3 Morris Traversal [Accepted]</h4>
+In this method, we have to use a new data structure-Threaded Binary Tree, and the strategy is as follows:</p>
+
+Step 1: Initialize current as root</p>
+Step 2: While current is not NULL, </p>
+If current does not have left child</p>
+a. Add current’s value </p>
+b. Go to the right, i.e., current = current.right</p>
+Else</p>
+a. In current's left subtree, make current the right child of the rightmost node</p>
+b. Go to this left child, i.e., current = current.left</p>
+</blockquote>
+For Example:</p>
+</span>          1
+        /   
+       2     3
+      /    /
+     4   5 6
+</pre></div>
+
+
+First, 1 is the root, so initialize 1 as current, 1 has left child which is 2, the current's left subtree is</p>
+</span>         2
+        / 
+       4   5
+</pre></div>
+
+
+So in this subtree, the rightmost node is 5, then make the current(1) as the right child of 5. Set current = cuurent.left (current = 2).
+The tree now looks like:</p>
+</span>         2
+        / 
+       4   5
+            
+             1
+              
+               3
+              /
+             6
+</pre></div>
+
+
+For current 2, which has left child 4, we can continue with thesame process as we did above</p>
+</span>        4
+         
+          2
+           
+            5
+             
+              1
+               
+                3
+               /
+              6
+</pre></div>
+
+
+then add 4 because it has no left child, then add 2, 5, 1, 3 one by one, for node 3 which has left child 6, do the same as above.
+Finally, the inorder taversal is [4,2,5,1,6,3].</p>
+For more details, please check 
+<a href="https://en.wikipedia.org/wiki/Threaded_binary_tree">Threaded binary tree</a> and 
+<a href="https://stackoverflow.com/questions/5502916/explain-morris-inorder-tree-traversal-without-using-stacks-or-recursion">Explaination of Morris Method</a></p>
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> List</span> &lt;</span> Integer</span> &gt;</span> inorderTraversal</span>(</span>TreeNode</span> root</span>)</span> {</span>
+        List</span> &lt;</span> Integer</span> &gt;</span> res</span> =</span> new</span> ArrayList</span> &lt;</span> &gt;</span> ();</span>
+        TreeNode</span> curr</span> =</span> root</span>;</span>
+        TreeNode</span> pre</span>;</span>
+        while</span> (</span>curr</span> !=</span> null</span>)</span> {</span>
+            if</span> (</span>curr</span>.</span>left</span> ==</span> null</span>)</span> {</span>
+                res</span>.</span>add</span>(</span>curr</span>.</span>val</span>);</span>
+                curr</span> =</span> curr</span>.</span>right</span>;</span> // move to next right node</span>
+            }</span> else</span> {</span> // has a left subtree</span>
+                pre</span> =</span> curr</span>.</span>left</span>;</span>
+                while</span> (</span>pre</span>.</span>right</span> !=</span> null</span>)</span> {</span> // find rightmost</span>
+                    pre</span> =</span> pre</span>.</span>right</span>;</span>
+                }</span>
+                pre</span>.</span>right</span> =</span> curr</span>;</span> // put cur after the pre node</span>
+                TreeNode</span> temp</span> =</span> curr</span>;</span> // store cur node</span>
+                curr</span> =</span> curr</span>.</span>left</span>;</span> // move cur to the top of the new tree</span>
+                temp</span>.</span>left</span> =</span> null</span>;</span> // original cur left be null, avoid infinite loops</span>
+            }</span>
+        }</span>
+        return</span> res</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. To prove that the time complexity is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>,
+the biggest problem lies in finding the time complexity of finding the predecessor nodes of all the nodes in the binary tree.
+Intuitively, the complexity is <span class="maths katex-rendered">O</mi>(</mo>n</mi>l</mi>o</mi>g</mi>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(nlogn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">o</span><span class="mord mathit" style="margin-right: 0.03588em;">g</span><span class="mord mathit">n</span>)</span></span></span></span></span>, because to find the predecessor node for a single node related to the height of the tree.
+But in fact, finding the predecessor nodes for all nodes only needs <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span> time. Because a binary Tree with <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> nodes has <span class="maths katex-rendered">n</mi>−</mo>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.64444em;"></span><span class="strut bottom" style="height: 0.72777em; vertical-align: -0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span>−</span><span class="mord mathrm">1</span></span></span></span></span> edges, the whole processing for each edges up to 2 times, one is to locate a node, and the other is to find the predecessor node.
+So the complexity is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Arraylist of size <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is used.</p>
+</li>
+</ul>
+
+Analysis written by: <a href="https://leetcode.com/monkeykingyan">@monkeykingyan</a></p>

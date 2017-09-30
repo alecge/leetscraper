@@ -1,0 +1,184 @@
+<div class="toc hide">
+
+<a href="#summary">Summary</a></li>
+<a href="#solution">Solution</a>
+<a href="#approach-1-two-stacks-push-on-per-operation-pop-o1-per-operation">Approach #1 (Two Stacks) Push - O(n) per operation, Pop - O(1) per operation.</a></li>
+<a href="#approach-2-two-stacks-push-o1-per-operation-pop-amortized-o1-per-operation">Approach #2 (Two Stacks) Push - O(1) per operation, Pop - Amortized O(1) per operation.</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Summary</h2>
+This article is for beginners. It introduces the following ideas:
+Queue, Stack.</p>
+Solution</h2>
+Queue is FIFO</strong> (first in - first out) data structure, in which the elements are inserted from one side - rear</code> and removed from the other - front</code>.
+The most intuitive way to implement it is with linked lists, but this article will introduce another approach  using stacks.
+Stack is LIFO</strong> (last in - first out) data structure, in which elements are added and removed from the same end, called top</code>.
+To satisfy FIFO</strong> property of a queue we need to keep two stacks. They serve to reverse arrival order of the  elements and one of them store the queue elements in their final order.</p>
+
+<h4 id="approach-1-two-stacks-push-on-per-operation-pop-o1-per-operation">Approach #1 (Two Stacks) Push - <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span> per operation, Pop - <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> per operation.</h4>
+Algorithm</strong></p>
+Push</strong></p>
+A queue is FIFO (first-in-first-out) but a stack is LIFO (last-in-first-out). This means the newest element must be pushed to the bottom of the stack. To do so we first transfer all s1</code> elements to auxiliary stack s2</code>. Then the newly arrived element is pushed on top of s2</code> and all its elements are popped and pushed to s1</code>.</p>
+<img alt="Push an element in queue" src="https://leetcode.com/media/original_images/232_queue_using_stacksBPush.png" width="539px"></p>
+Figure 1. Push an element in queue</em></p>
+Java</strong></p>
+</span>private</span> int</span> front</span>;</span>
+
+public</span> void</span> push</span>(</span>int</span> x</span>)</span> {</span>
+    if</span> (</span>s1</span>.</span>empty</span>())</span>
+        front</span> =</span> x</span>;</span>
+    while</span> (!</span>s1</span>.</span>isEmpty</span>())</span>
+        s2</span>.</span>push</span>(</span>s1</span>.</span>pop</span>());</span>
+    s2</span>.</span>push</span>(</span>x</span>);</span>
+    while</span> (!</span>s2</span>.</span>isEmpty</span>())</span>
+        s1</span>.</span>push</span>(</span>s2</span>.</span>pop</span>());</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</li>
+</ul>
+Each element, with the exception of the newly arrived, is pushed and popped twice. The last inserted element is popped and pushed once. Therefore this gives  <span class="maths katex-rendered">4</mn>n</mi>+</mo>2</mn></mrow><annotation encoding="application/x-tex">4 n + 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.64444em;"></span><span class="strut bottom" style="height: 0.72777em; vertical-align: -0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathit">n</span>+</span><span class="mord mathrm">2</span></span></span></span></span>  operations where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the queue size. The  push</code> and pop</code> operations have <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> time complexity.</p>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.
+We need additional memory to store the queue elements</li>
+</ul>
+Pop</strong></p>
+The algorithm pops an element from  the stack s1</code>, because s1</code> stores always on its top the first inserted element in the queue.
+The front element of the queue is kept as front</code>.</p>
+<img alt="Pop an element from queue" src="https://leetcode.com/media/original_images/232_queue_using_stacksBPop.png" width="539px"></p>
+Figure 2. Pop an element from queue</em></p>
+Java</strong></p>
+</span>// Removes the element from the front of queue.</span>
+public</span> void</span> pop</span>()</span> {</span>
+    s1</span>.</span>pop</span>();</span>
+    if</span> (!</span>s1</span>.</span>empty</span>())</span>
+        front</span> =</span> s1</span>.</span>peek</span>();</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</li>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</li>
+</ul>
+Empty</strong></p>
+Stack s1</code> contains all stack elements, so the algorithm checks s1</code> size to return if the queue is empty.</p>
+</span>// Return whether the queue is empty.</span>
+public</span> boolean</span> empty</span>()</span> {</span>
+    return</span> s1</span>.</span>isEmpty</span>();</span>
+}</span>
+</pre></div>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+Peek</strong></p>
+The front</code> element is kept in constant memory and is modified when we push or pop an element.</p>
+</span>// Get the front element.</span>
+public</span> int</span> peek</span>()</span> {</span>
+  return</span> front</span>;</span>
+}</span>
+</pre></div>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.
+The front</code> element has been calculated in advance and only returned in peek</code> operation.</p>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+
+<h4 id="approach-2-two-stacks-push-o1-per-operation-pop-amortized-o1-per-operation">Approach #2 (Two Stacks) Push - <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> per operation, Pop - Amortized <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> per operation.</h4>
+Algorithm</strong></p>
+Push</strong></p>
+The newly arrived element is always added on top of stack s1</code> and the first element is kept as front</code> queue element</p>
+<img alt="Push an element in queue" src="https://leetcode.com/media/original_images/232_queue_using_stacksAPush.png" width="539px"></p>
+Figure 3. Push an element in queue</em></p>
+Java</strong></p>
+</span>private</span> Stack</span>&lt;</span>Integer</span>&gt;</span> s1</span> =</span> new</span> Stack</span>&lt;&gt;();</span>
+private</span> Stack</span>&lt;</span>Integer</span>&gt;</span> s2</span> =</span> new</span> Stack</span>&lt;&gt;();</span>
+
+// Push element x to the back of queue.</span>
+public</span> void</span> push</span>(</span>int</span> x</span>)</span> {</span>
+    if</span> (</span>s1</span>.</span>empty</span>())</span>
+        front</span> =</span> x</span>;</span>
+    s1</span>.</span>push</span>(</span>x</span>);</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</li>
+</ul>
+Аppending an element to a stack is an O(1) operation.</p>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.
+We need additional memory to store the queue elements</li>
+</ul>
+Pop</strong></p>
+We have to remove element in front of the queue. This is the first inserted element in the stack s1</code> and it is positioned at the bottom of the stack because of stack's LIFO (last in - first out)</code> policy. To remove the bottom element  from  s1</code>, we have to pop all elements from s1</code> and to push them on to an additional stack s2</code>, which helps us to store the elements of s1</code> in reversed order. This way  the bottom element of s1</code> will be positioned on top of s2</code> and we can simply pop it from stack s2</code>. Once s2</code> is empty, the algorithm transfer data from s1</code> to s2</code> again.</p>
+<img alt="Pop an element from stack" src="https://leetcode.com/media/original_images/232_queue_using_stacksAPop.png" width="539px"></p>
+Figure 4. Pop an element from stack</em></p>
+Java</strong></p>
+</span>// Removes the element from in front of queue.</span>
+public</span> void</span> pop</span>()</span> {</span>
+    if</span> (</span>s2</span>.</span>isEmpty</span>())</span> {</span>
+        while</span> (!</span>s1</span>.</span>isEmpty</span>())</span>
+            s2</span>.</span>push</span>(</span>s1</span>.</span>pop</span>());</span>
+    }</span>
+    s2</span>.</span>pop</span>();</span>    
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+Time complexity: Amortized <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>, Worst-case <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</li>
+</ul>
+In the worst case scenario when stack s2</code> is empty, the algorithm pops <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> elements from stack s1 and pushes <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> elements to s2</code>, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the queue size. This gives <span class="maths katex-rendered">2</mn>n</mi></mrow><annotation encoding="application/x-tex">2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.64444em;"></span><span class="strut bottom" style="height: 0.64444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathit">n</span></span></span></span></span> operations, which is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. But when stack s2</code> is not empty the algorithm has <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> time complexity. So what does it mean by Amortized <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>? Please see the next section on Amortized Analysis for more information.</p>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</li>
+</ul>
+Amortized Analysis</strong></p>
+Amortized analysis gives the average performance (over time) of each operation in the worst case. The basic idea is that a worst case operation can alter the state in such a way that the worst case cannot occur again for a long time, thus amortizing its cost.</p>
+Consider this example where we start with an empty queue with the following sequence of operations applied:</p>
+
+<p class="maths katex-rendered">p</mi>u</mi>s</mi>h</mi>1</mn></msub>,</mo>p</mi>u</mi>s</mi>h</mi>2</mn></msub>,</mo>…</mo>,</mo>p</mi>u</mi>s</mi>h</mi>n</mi></msub>,</mo>p</mi>o</mi>p</mi>1</mn></msub>,</mo>p</mi>o</mi>p</mi>2</mn></msub>…</mo>,</mo>p</mi>o</mi>p</mi>n</mi></msub></mrow><annotation encoding="application/x-tex">
+push_1, push_2, ldots, push_n, pop_1,pop_2 ldots, pop_n
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">p</span><span class="mord mathit">u</span><span class="mord mathit">s</span><span class="mord mathit">h</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathrm mtight">1</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>,</span><span class="mord mathit">p</span><span class="mord mathit">u</span><span class="mord mathit">s</span><span class="mord mathit">h</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>,</span>…</span>,</span><span class="mord mathit">p</span><span class="mord mathit">u</span><span class="mord mathit">s</span><span class="mord mathit">h</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>,</span><span class="mord mathit">p</span><span class="mord mathit">o</span><span class="mord mathit">p</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathrm mtight">1</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>,</span><span class="mord mathit">p</span><span class="mord mathit">o</span><span class="mord mathit">p</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>…</span>,</span><span class="mord mathit">p</span><span class="mord mathit">o</span><span class="mord mathit">p</span><span class="" style="top: 0.15em; margin-right: 0.05em; margin-left: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span></p>
+</p>
+The worst case time complexity of a single pop operation is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Since we have <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> pop operations, using the worst-case per operation analysis gives us a total of <span class="maths katex-rendered">O</mi>(</mo>n</mi>2</mn></msup>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span> time.</p>
+However, in a sequence of operations the worst case does not occur often in each operation - some operations may be cheap, some may be expensive. Therefore, a traditional worst-case per operation analysis can give overly pessimistic bound. For example, in a dynamic array only some inserts take a linear time, though others - a constant time.</p>
+In the example above, the number of times pop operation can be called is limited by the number of push operations before it. Although a single pop operation could be expensive, it is expensive only once per n</code> times (queue size), when s2</code> is empty and there is a need for data transfer between s1</code> and s2</code>. Hence the total time complexity of the sequence is : n</code> (for push operations) + 2*n</code> (for first pop operation) + n - 1</code> ( for pop operations) which is <span class="maths katex-rendered">O</mi>(</mo>2</mn>∗</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(2*n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span>∗</span><span class="mord mathit">n</span>)</span></span></span></span></span>.This gives <span class="maths katex-rendered">O</mi>(</mo>2</mn>n</mi>/</mi>2</mn>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(2n/2n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span><span class="mord mathit">n</span><span class="mord mathrm">/</span><span class="mord mathrm">2</span><span class="mord mathit">n</span>)</span></span></span></span></span> = <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> average time per operation.</p>
+Empty</strong></p>
+Both stacks s1</code> and s2</code> contain all stack elements, so the algorithm checks s1</code> and s2</code> size to return if the queue is empty.</p>
+</span>// Return whether the queue is empty.</span>
+public</span> boolean</span> empty</span>()</span> {</span>
+    return</span> s1</span>.</span>isEmpty</span>()</span> &amp;&amp;</span> s2</span>.</span>isEmpty</span>();</span>
+}</span>
+</pre></div>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+Peek</strong></p>
+The front</code> element is kept in constant memory and is modified when we push an element. When s2</code> is not empty, front element is positioned on the top of s2</code></p>
+</span>// Get the front element.</span>
+public</span> int</span> peek</span>()</span> {</span>
+    if</span> (!</span>s2</span>.</span>isEmpty</span>())</span> {</span>
+            return</span> s2</span>.</span>peek</span>();</span>
+    }</span>
+    return</span> front</span>;</span>
+}</span>
+</pre></div>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+The front</code> element was either previously calculated or returned as a top element of stack s2</code>. Therefore complexity is <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>
+</p>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.</p>
+Analysis written by: @elmirap.</p>

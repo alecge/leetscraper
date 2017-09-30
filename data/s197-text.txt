@@ -1,0 +1,14 @@
+Solution
+Approach: Using JOIN and DATEDIFF() clause [Accepted]
+Algorithm
+MySQL uses DATEDIFF to compare two date type values.
+So, we can get the result by joining this table weather with itself and use this DATEDIFF() function.
+MySQL
+SELECT
+    weather.id AS 'Id'
+FROM
+    weather
+        JOIN
+    weather w ON DATEDIFF(weather.date, w.date) = 1
+        AND weather.Temperature > w.Temperature
+;

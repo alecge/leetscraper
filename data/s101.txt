@@ -1,0 +1,60 @@
+Solution</h2>
+
+<h4 id="approach-1-recursive-accepted">Approach #1 (Recursive) [Accepted]</h4>
+A tree is symmetric if the left subtree is a mirror reflection of the right subtree.</p>
+<img alt="Push an element in stack" src="https://leetcode.com/media/original_images/101_Symmetric.png" width="200px"></p>
+Therefore, the question is: when are two trees a mirror reflection of each other?</p>
+Two trees are a mirror reflection of each other if:</p>
+
+Their two roots have the same value.</li>
+The right subtree of each tree is a mirror reflection of the left subtree of the other tree.</li>
+</ol>
+<img alt="Push an element in stack" src="https://leetcode.com/media/original_images/101_Symmetric_Mirror.png" width="400px"></p>
+This is like a person looking at a mirror. The reflection in the mirror has the same head, but the reflection's right arm corresponds to the actual person's left arm, and vice versa.</p>
+The explanation above translates naturally to a recursive function as follows.</p>
+Java</strong></p>
+</span>public</span> boolean</span> isSymmetric</span>(</span>TreeNode</span> root</span>)</span> {</span>
+    return</span> isMirror</span>(</span>root</span>,</span> root</span>);</span>
+}</span>
+
+public</span> boolean</span> isMirror</span>(</span>TreeNode</span> t1</span>,</span> TreeNode</span> t2</span>)</span> {</span>
+    if</span> (</span>t1</span> ==</span> null</span> &amp;&amp;</span> t2</span> ==</span> null</span>)</span> return</span> true</span>;</span>
+    if</span> (</span>t1</span> ==</span> null</span> ||</span> t2</span> ==</span> null</span>)</span> return</span> false</span>;</span>
+    return</span> (</span>t1</span>.</span>val</span> ==</span> t2</span>.</span>val</span>)</span>
+        &amp;&amp;</span> isMirror</span>(</span>t1</span>.</span>right</span>,</span> t2</span>.</span>left</span>)</span>
+        &amp;&amp;</span> isMirror</span>(</span>t1</span>.</span>left</span>,</span> t2</span>.</span>right</span>);</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+Because we traverse the entire input tree once, the total run time is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the total number of nodes in the tree.</p>
+The number of recursive calls is bound by the height of the tree. In the worst case, the tree is linear and the height is in <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Therefore, space complexity due to recursive calls on the stack is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span> in the worst case.</p>
+
+<h4 id="approach-2-iterative-accepted">Approach #2 (Iterative) [Accepted]</h4>
+Instead of recursion, we can also use iteration with the aid of a queue. Each two consecutive nodes in the queue should be equal, and their subtrees a mirror of each other. Initially, the queue contains root</code> and root</code>. Then the algorithm works similarly to BFS, with some key differences. Each time, two nodes are extracted and their values compared. Then, the right and left children of the two nodes are inserted in the queue in opposite order. The algorithm is done when either the queue is empty, or we detect that the tree is not symmetric (i.e. we pull out two consecutive nodes from the queue that are unequal).</p>
+Java</strong></p>
+</span>public</span> boolean</span> isSymmetric</span>(</span>TreeNode</span> root</span>)</span> {</span>
+    Queue</span>&lt;</span>TreeNode</span>&gt;</span> q</span> =</span> new</span> LinkedList</span>&lt;&gt;();</span>
+    q</span>.</span>add</span>(</span>root</span>);</span>
+    q</span>.</span>add</span>(</span>root</span>);</span>
+    while</span> (!</span>q</span>.</span>isEmpty</span>())</span> {</span>
+        TreeNode</span> t1</span> =</span> q</span>.</span>poll</span>();</span>
+        TreeNode</span> t2</span> =</span> q</span>.</span>poll</span>();</span>
+        if</span> (</span>t1</span> ==</span> null</span> &amp;&amp;</span> t2</span> ==</span> null</span>)</span> continue</span>;</span>
+        if</span> (</span>t1</span> ==</span> null</span> ||</span> t2</span> ==</span> null</span>)</span> return</span> false</span>;</span>
+        if</span> (</span>t1</span>.</span>val</span> !=</span> t2</span>.</span>val</span>)</span> return</span> false</span>;</span>
+        q</span>.</span>add</span>(</span>t1</span>.</span>left</span>);</span>
+        q</span>.</span>add</span>(</span>t2</span>.</span>right</span>);</span>
+        q</span>.</span>add</span>(</span>t1</span>.</span>right</span>);</span>
+        q</span>.</span>add</span>(</span>t2</span>.</span>left</span>);</span>
+    }</span>
+    return</span> true</span>;</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+Because we traverse the entire input tree once, the total run time is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the total number of nodes in the tree.</p>
+There is additional space required for the search queue. In the worst case, we have to insert <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span> nodes in the queue. Therefore, space complexity is <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</p>
+Analysis written by: @noran.</p>

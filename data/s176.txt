@@ -1,0 +1,47 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-sub-query-and-limit-clause-accepted">Approach: Using sub-query and LIMIT clause [Accepted]</a></li>
+<a href="#approach-using-ifnull-and-limit-clause-accepted">Approach: Using IFNULL and LIMIT clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-sub-query-and-limit-clause-accepted">Approach: Using sub-query and LIMIT</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+Sort the distinct salary in descend order and then utilize the <a href="https://dev.mysql.com/doc/refman/5.7/en/select.html">LIMIT</code></a> clause to get the second highest salary.</p>
+</span>SELECT</span> DISTINCT</span>
+    Salary</span> AS</span> SecondHighestSalary</span>
+FROM</span>
+    Employee</span>
+ORDER</span> BY</span> Salary</span> DESC</span>
+LIMIT</span> 1</span> OFFSET</span> 1</span>
+</pre></div>
+
+
+However, this solution will be judged as 'Wrong Answer' if there is no such second highest salary since there might be only one record in this table. To overcome this issue, we can take this as a temp table.</p>
+MySQL</strong></p>
+</span>SELECT</span>
+    (</span>SELECT</span> DISTINCT</span>
+            Salary</span>
+        FROM</span>
+            Employee</span>
+        ORDER</span> BY</span> Salary</span> DESC</span>
+        LIMIT</span> 1</span> OFFSET</span> 1</span>)</span> AS</span> SecondHighestSalary</span>
+;</span>
+</pre></div>
+
+
+<h4 id="approach-using-ifnull-and-limit-clause-accepted">Approach: Using IFNULL</code> and LIMIT</code> clause [Accepted]</h4>
+Another way to solve the 'NULL' problem is to use IFNULL</code> funtion as below.</p>
+MySQL</strong></p>
+</span>SELECT</span>
+    IFNULL</span>(</span>
+      (</span>SELECT</span> DISTINCT</span> Salary</span>
+       FROM</span> Employee</span>
+       ORDER</span> BY</span> Salary</span> DESC</span>
+        LIMIT</span> 1</span> OFFSET</span> 1</span>),</span>
+    NULL</span>)</span> AS</span> SecondHighestSalary</span>
+</pre></div>

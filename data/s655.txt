@@ -1,0 +1,104 @@
+<div class="toc hide">
+
+<a href="#approach-1-brute-force-time-limit-exceeded">Approach #1: Brute Force [Time Limit Exceeded]</a></li>
+<a href="#approach-2-greedy-accepted">Approach #2: Greedy [Accepted]</a></li>
+</ul>
+</div>
+<h4 id="approach-1-brute-force-time-limit-exceeded">Approach #1: Brute Force [Time Limit Exceeded]</h4>
+Intuition and Algorithm</strong></p>
+For each index i</code> in the given string, let's remove that character, then check if the resulting string is a palindrome.  If it is, (or if the original string was a palindrome), then we'll return true</code>.</p>
+Python</strong></p>
+</span>class</span> Solution</span>(</span>object</span>):</span>
+    def</span> validPalindrome</span>(</span>self</span>,</span> s</span>):</span>
+        for</span> i</span> in</span> xrange</span>(</span>len</span>(</span>s</span>)):</span>
+            t</span> =</span> s</span>[:</span>i</span>]</span> +</span> s</span>[</span>i</span>+</span>1</span>:]</span>
+            if</span> t</span> ==</span> t</span>[::</span>-</span>1</span>]:</span> return</span> True</span>
+
+        return</span> s</span> ==</span> s</span>[::</span>-</span>1</span>]</span>
+</pre></div>
+
+
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> boolean</span> isPalindrome</span>(</span>CharSequence</span> s</span>)</span> {</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> s</span>.</span>length</span>()</span> /</span> 2</span>;</span> i</span>++)</span> {</span>
+            if</span> (</span>s</span>.</span>charAt</span>(</span>i</span>)</span> !=</span> s</span>.</span>charAt</span>(</span>s</span>.</span>length</span>()</span> -</span> 1</span> -</span> i</span>))</span> {</span>
+                return</span> false</span>;</span>
+            }</span>
+        }</span>
+        return</span> true</span>;</span>
+    }</span>
+    public</span> boolean</span> validPalindrome</span>(</span>String</span> s</span>)</span> {</span>
+        StringBuilder</span> sb</span> =</span> new</span> StringBuilder</span>(</span>s</span>);</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> s</span>.</span>length</span>();</span> i</span>++)</span> {</span>
+            char</span> c</span> =</span> sb</span>.</span>charAt</span>(</span>i</span>);</span>
+            sb</span>.</span>deleteCharAt</span>(</span>i</span>);</span>
+            if</span> (</span>isPalindrome</span>(</span>sb</span>))</span> return</span> true</span>;</span>
+            sb</span>.</span>insert</span>(</span>i</span>,</span> c</span>);</span>
+        }</span>
+        return</span> isPalindrome</span>(</span>s</span>);</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>2</mn></msup>)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span> where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the length of the string.  We do the following <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> times: create a string of length <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> and iterate over it.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>, the space used by our candidate answer.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-greedy-accepted">Approach #2: Greedy [Accepted]</h4>
+Intuition</strong></p>
+If the beginning and end characters of a string are the same (ie. s[0] == s[s.length - 1]</code>), then whether the inner characters are a palindrome (s[1], s[2], ..., s[s.length - 2]</code>) uniquely determines whether the entire string is a palindrome.</p>
+Algorithm</strong></p>
+Suppose we want to know whether s[i], s[i+1], ..., s[j]</code> form a palindrome.  If i &gt;= j</code> then we are done.  If s[i] == s[j]</code> then we may take i++; j--</code>.  Otherwise, the palindrome must be either s[i+1], s[i+2],  ..., s[j]</code> or s[i], s[i+1], ..., s[j-1]</code>, and we should check both cases.</p>
+Python</strong></p>
+</span>class</span> Solution</span>(</span>object</span>):</span>
+    def</span> validPalindrome</span>(</span>self</span>,</span> s</span>):</span>
+        def</span> is_pali_range</span>(</span>i</span>,</span> j</span>):</span>
+            return</span> all</span>(</span>s</span>[</span>k</span>]</span> ==</span> s</span>[</span>j</span>-</span>k</span>+</span>i</span>]</span> for</span> k</span> in</span> range</span>(</span>i</span>,</span> j</span>))</span>
+
+        for</span> i</span> in</span> xrange</span>(</span>len</span>(</span>s</span>)</span> /</span> 2</span>):</span>
+            if</span> s</span>[</span>i</span>]</span> !=</span> s</span>[</span>~</span>i</span>]:</span>
+                j</span> =</span> len</span>(</span>s</span>)</span> -</span> 1</span> -</span> i</span>
+                return</span> is_pali_range</span>(</span>i</span>+</span>1</span>,</span> j</span>)</span> or</span> is_pali_range</span>(</span>i</span>,</span> j</span>-</span>1</span>)</span>
+        return</span> True</span>
+</pre></div>
+
+
+Java</strong></p>
+</span>class</span> Solution</span> {</span>
+    public</span> boolean</span> isPalindromeRange</span>(</span>String</span> s</span>,</span> int</span> i</span>,</span> int</span> j</span>)</span> {</span>
+        for</span> (</span>int</span> k</span> =</span> i</span>;</span> k</span> &lt;=</span> i</span> +</span> (</span>j</span> -</span> i</span>)</span> /</span> 2</span>;</span> k</span>++)</span> {</span>
+            if</span> (</span>s</span>.</span>charAt</span>(</span>k</span>)</span> !=</span> s</span>.</span>charAt</span>(</span>j</span> -</span> k</span> +</span> i</span>))</span> return</span> false</span>;</span>
+        }</span>
+        return</span> true</span>;</span>
+    }</span>
+    public</span> boolean</span> validPalindrome</span>(</span>String</span> s</span>)</span> {</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> s</span>.</span>length</span>()</span> /</span> 2</span>;</span> i</span>++)</span> {</span>
+            if</span> (</span>s</span>.</span>charAt</span>(</span>i</span>)</span> !=</span> s</span>.</span>charAt</span>(</span>s</span>.</span>length</span>()</span> -</span> 1</span> -</span> i</span>))</span> {</span>
+                int</span> j</span> =</span> s</span>.</span>length</span>()</span> -</span> 1</span> -</span> i</span>;</span>
+                return</span> (</span>isPalindromeRange</span>(</span>s</span>,</span> i</span>+</span>1</span>,</span> j</span>)</span> ||</span>
+                        isPalindromeRange</span>(</span>s</span>,</span> i</span>,</span> j</span>-</span>1</span>));</span>
+            }</span>
+        }</span>
+        return</span> true</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time Complexity: <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span> where <span class="maths katex-rendered">N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.68333em;"></span><span class="strut bottom" style="height: 0.68333em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.10903em;">N</span></span></span></span></span> is the length of the string.  Each of two checks of whether some substring is a palindrome is <span class="maths katex-rendered">O</mi>(</mo>N</mi>)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.10903em;">N</span>)</span></span></span></span></span>.</p>
+</li>
+
+Space Complexity: <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span> additional complexity.  Only pointers were stored in memory.</p>
+</li>
+</ul>

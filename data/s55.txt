@@ -1,0 +1,383 @@
+<div class="toc hide">
+
+<a href="#naming">Naming</a></li>
+<a href="#solution">Solution</a>
+<a href="#approach-1-backtracking-stack-overflow">Approach #1 (Backtracking) [Stack Overflow]</a></li>
+<a href="#approach-2-dynamic-programming-top-down-stack-overflow">Approach #2 (Dynamic Programming Top-down) [Stack Overflow]</a></li>
+<a href="#approach-3-dynamic-programming-bottom-up-time-limit-exceeded">Approach #3 (Dynamic Programming Bottom-up) [Time limit exceeded]</a></li>
+<a href="#approach-4-greedy-accepted">Approach #4 (Greedy) [Accepted]</a></li>
+</ul>
+</li>
+<a href="#conclusion">Conclusion</a></li>
+<a href="#appendix-a-complexity-analysis-for-approach-1">Appendix A - Complexity Analysis for Approach #1</a></li>
+<a href="#references">References</a></li>
+</ul>
+</div>
+Naming</h2>
+
+We call a position in the array a "good index"</strong> if starting at that position, we can reach the last index. Otherwise, that index is called a "bad index"</strong>. The problem then reduces to whether or not index 0 is a "good index".</li>
+</ul>
+Solution</h2>
+This is a dynamic programming[1]</sup> question. Usually, solving and fully understanding a dynamic programming problem is a 4 step process:</p>
+
+Start with the recursive backtracking solution</li>
+Optimize by using a memoization table (top-down[3]</sup> dynamic programming)</li>
+Remove the need for recursion (bottom-up dynamic programming)</li>
+Apply final tricks to reduce the time / memory complexity</li>
+</ol>
+All solutions presented below produce the correct result, but they differ in run time and memory requirements.</p>
+
+<h4 id="approach-1-backtracking-stack-overflow">Approach #1 (Backtracking) [Stack Overflow]</h4>
+This is the inefficient solution where we try every single jump pattern that takes us from the first position to the last. We start from the first position and jump to every index that is reachable. We repeat the process until last index is reached. When stuck, backtrack.</p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> boolean</span> canJumpFromPosition</span>(</span>int</span> position</span>,</span> int</span>[]</span> nums</span>)</span> {</span>
+        if</span> (</span>position</span> ==</span> nums</span>.</span>length</span> -</span> 1</span>)</span> {</span>
+            return</span> true</span>;</span>
+        }</span>
+
+        int</span> furthestJump</span> =</span> Math</span>.</span>min</span>(</span>position</span> +</span> nums</span>[</span>position</span>],</span> nums</span>.</span>length</span> -</span> 1</span>);</span>
+        for</span> (</span>int</span> nextPosition</span> =</span> position</span> +</span> 1</span>;</span> nextPosition</span> &lt;=</span> furthestJump</span>;</span> nextPosition</span>++)</span> {</span>
+            if</span> (</span>canJumpFromPosition</span>(</span>nextPosition</span>,</span> nums</span>))</span> {</span>
+                return</span> true</span>;</span>
+            }</span>
+        }</span>
+
+        return</span> false</span>;</span>
+    }</span>
+
+    public</span> boolean</span> canJump</span>(</span>int</span>[]</span> nums</span>)</span> {</span>
+        return</span> canJumpFromPosition</span>(</span>0</span>,</span> nums</span>);</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+One quick optimization we can do for the code above is to check the nextPosition</code> from right to left. The theoretical worst case performance is the same, but in practice, for silly examples, the code might run faster. Intuitively, this means we always try to make the biggest jump such that we reach the end as soon as possible</p>
+The change required is:</p>
+Java</strong></p>
+</span>// Old</span>
+for</span> (</span>int</span> nextPosition</span> =</span> position</span> +</span> 1</span>;</span> nextPosition</span> &lt;=</span> furthestJump</span>;</span> nextPosition</span>++)</span>
+// New</span>
+for</span> (</span>int</span> nextPosition</span> =</span> furthestJump</span>;</span> nextPosition</span> &gt;</span> position</span>;</span> nextPosition</span>--)</span>
+</pre></div>
+
+
+For instance, in the example below, if we start from index 0</strong>, jump as far as possible and reach 1</strong>, jump as far as possible and reach 6</strong>. By doing so, we determine that 0</strong> is a GOOD</em> index in 3 steps.</p>
+
+
+
+Index</th>
+0</th>
+1</th>
+2</th>
+3</th>
+4</th>
+5</th>
+6</th>
+</tr>
+</thead>
+
+
+nums</td>
+1</td>
+5</td>
+2</td>
+1</td>
+0</td>
+2</td>
+0</td>
+</tr>
+</tbody>
+</table>
+To illustrate the worst case, where this optimization has no effect, take the example below. Index 6</strong> cannot be reached from any position, but all combinations will be tried.</p>
+
+
+
+Index</th>
+0</th>
+1</th>
+2</th>
+3</th>
+4</th>
+5</th>
+6</th>
+</tr>
+</thead>
+
+
+nums</td>
+5</td>
+4</td>
+3</td>
+2</td>
+1</td>
+0</td>
+0</td>
+</tr>
+</tbody>
+</table>
+The first few steps of the backtracking algorithm for the example above are: 0 -&gt; 4 -&gt; 5 -&gt; 4 -&gt; 0 -&gt; 3 -&gt; 5 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; etc.</p>
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>2</mn>n</mi></msup>)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span>. There are <span class="maths katex-rendered">2</mn>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.664392em;"></span><span class="strut bottom" style="height: 0.664392em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span> (upper bound) ways of jumping from the first position to the last, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the length of array nums</code>. For a complete proof, please refer to Appendix A.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Recursion requires additional memory for the stack frames.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-dynamic-programming-top-down-stack-overflow">Approach #2 (Dynamic Programming Top-down) [Stack Overflow]</h4>
+Top-down Dynamic Programming can be thought of as optimized backtracking. It relies on the observation that once we determine that a certain index is good / bad, this result will never change. This means that we can store the result and not need to recompute it every time.</p>
+Therefore, for each position in the array, we remember whether the index is good or bad. Let's call this array memo</code> and let its values be either one of: GOOD, BAD, UNKNOWN. This technique is called memoization[2]</sup>.</p>
+An example of a memoization table for input array nums = [2, 4, 2, 1, 0, 2, 0]</code> can be seen in the diagram below. We write G</strong> for a GOOD</em> position and B</strong> for a BAD</em> one. We can see that we cannot start from indices 2, 3 or 4 and eventually reach last index (6), but we can do that from indices 0, 1, 5 and (trivially) 6.</p>
+
+
+
+Index</th>
+0</th>
+1</th>
+2</th>
+3</th>
+4</th>
+5</th>
+6</th>
+</tr>
+</thead>
+
+
+nums</td>
+2</td>
+4</td>
+2</td>
+1</td>
+0</td>
+2</td>
+0</td>
+</tr>
+
+memo</td>
+G</td>
+G</td>
+B</td>
+B</td>
+B</td>
+G</td>
+G</td>
+</tr>
+</tbody>
+</table>
+Steps</strong></p>
+
+Initially, all elements of the memo</code> table are UNKNOWN</em>, except for the last one, which is (trivially) GOOD</em> (it can reach itself)</li>
+Modify the backtracking algorithm such that the recursive step first checks if the index is known (GOOD</em> / BAD</em>)
+If it is known then return True</em> / False</em></li>
+Otherwise perform the backtracking steps as before</li>
+</ol>
+</li>
+Once we determine the value of the current index, we store it in the memo</code> table</li>
+</ol>
+Java</strong></p>
+</span>enum</span> Index</span> {</span>
+    GOOD</span>,</span> BAD</span>,</span> UNKNOWN</span>
+}</span>
+
+public</span> class</span> Solution</span> {</span>
+    Index</span>[]</span> memo</span>;</span>
+
+    public</span> boolean</span> canJumpFromPosition</span>(</span>int</span> position</span>,</span> int</span>[]</span> nums</span>)</span> {</span>
+        if</span> (</span>memo</span>[</span>position</span>]</span> !=</span> Index</span>.</span>UNKNOWN</span>)</span> {</span>
+            return</span> memo</span>[</span>position</span>]</span> ==</span> Index</span>.</span>GOOD</span> ?</span> true</span> :</span> false</span>;</span>
+        }</span>
+
+        int</span> furthestJump</span> =</span> Math</span>.</span>min</span>(</span>position</span> +</span> nums</span>[</span>position</span>],</span> nums</span>.</span>length</span> -</span> 1</span>);</span>
+        for</span> (</span>int</span> nextPosition</span> =</span> position</span> +</span> 1</span>;</span> nextPosition</span> &lt;=</span> furthestJump</span>;</span> nextPosition</span>++)</span> {</span>
+            if</span> (</span>canJumpFromPosition</span>(</span>nextPosition</span>,</span> nums</span>))</span> {</span>
+                memo</span>[</span>position</span>]</span> =</span> Index</span>.</span>GOOD</span>;</span>
+                return</span> true</span>;</span>
+            }</span>
+        }</span>
+
+        memo</span>[</span>position</span>]</span> =</span> Index</span>.</span>BAD</span>;</span>
+        return</span> false</span>;</span>
+    }</span>
+
+    public</span> boolean</span> canJump</span>(</span>int</span>[]</span> nums</span>)</span> {</span>
+        memo</span> =</span> new</span> Index</span>[</span>nums</span>.</span>length</span>];</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> memo</span>.</span>length</span>;</span> i</span>++)</span> {</span>
+            memo</span>[</span>i</span>]</span> =</span> Index</span>.</span>UNKNOWN</span>;</span>
+        }</span>
+        memo</span>[</span>memo</span>.</span>length</span> -</span> 1</span>]</span> =</span> Index</span>.</span>GOOD</span>;</span>
+        return</span> canJumpFromPosition</span>(</span>0</span>,</span> nums</span>);</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>2</mn></msup>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span>.
+For every element in the array, say i</code>, we are looking at the next nums[i]</code> elements to its right aiming to find a GOOD</em> index. nums[i]</code> can be at most <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the length of array nums</code>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>2</mn>n</mi>)</mo>=</mo>O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(2n) = O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span><span class="mord mathit">n</span>)</span>=</span><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.
+First n originates from recursion. Second n comes from the usage of the memo table.</p>
+</li>
+</ul>
+
+<h4 id="approach-3-dynamic-programming-bottom-up-time-limit-exceeded">Approach #3 (Dynamic Programming Bottom-up) [Time limit exceeded]</h4>
+Top-down to bottom-up conversion is done by eliminating recursion. In practice, this achieves better performance as we no longer have the method stack overhead and might even benefit from some caching. More importantly, this step opens up possibilities for future optimization. The recursion is usually eliminated by trying to reverse the order of the steps from the top-down approach.</p>
+The observation to make here is that we only ever jump to the right. This means that if we start from the right of the array, every time we will query a position to our right, that position has already be determined as being GOOD</em> or BAD</em>. This means we don't need to recurse anymore, as we will always hit the memo</code> table.</p>
+Java</strong></p>
+</span>enum</span> Index</span> {</span>
+    GOOD</span>,</span> BAD</span>,</span> UNKNOWN</span>
+}</span>
+
+public</span> class</span> Solution</span> {</span>
+    public</span> boolean</span> canJump</span>(</span>int</span>[]</span> nums</span>)</span> {</span>
+        Index</span>[]</span> memo</span> =</span> new</span> Index</span>[</span>nums</span>.</span>length</span>];</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> memo</span>.</span>length</span>;</span> i</span>++)</span> {</span>
+            memo</span>[</span>i</span>]</span> =</span> Index</span>.</span>UNKNOWN</span>;</span>
+        }</span>
+        memo</span>[</span>memo</span>.</span>length</span> -</span> 1</span>]</span> =</span> Index</span>.</span>GOOD</span>;</span>
+
+        for</span> (</span>int</span> i</span> =</span> nums</span>.</span>length</span> -</span> 2</span>;</span> i</span> &gt;=</span> 0</span>;</span> i</span>--)</span> {</span>
+            int</span> furthestJump</span> =</span> Math</span>.</span>min</span>(</span>i</span> +</span> nums</span>[</span>i</span>],</span> nums</span>.</span>length</span> -</span> 1</span>);</span>
+            for</span> (</span>int</span> j</span> =</span> i</span> +</span> 1</span>;</span> j</span> &lt;=</span> furthestJump</span>;</span> j</span>++)</span> {</span>
+                if</span> (</span>memo</span>[</span>j</span>]</span> ==</span> Index</span>.</span>GOOD</span>)</span> {</span>
+                    memo</span>[</span>i</span>]</span> =</span> Index</span>.</span>GOOD</span>;</span>
+                    break</span>;</span>
+                }</span>
+            }</span>
+        }</span>
+
+        return</span> memo</span>[</span>0</span>]</span> ==</span> Index</span>.</span>GOOD</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>2</mn></msup>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span>.
+For every element in the array, say i</code>, we are looking at the next nums[i]</code> elements to its right aiming to find a GOOD</em> index. nums[i]</code> can be at most <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the length of array nums</code>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.
+This comes from the usage of the memo table.</p>
+</li>
+</ul>
+
+<h4 id="approach-4-greedy-accepted">Approach #4 (Greedy) [Accepted]</h4>
+Once we have our code in the bottom-up state, we can make one final, important observation. From a given position, when we try to see if we can jump to a GOOD</em> position, we only ever use one - the first one (see the break statement). In other words, the left-most one. If we keep track of this left-most GOOD</em> position as a separate variable, we can avoid searching for it in the array. Not only that, but we can stop using the array altogether.</p>
+Iterating right-to-left, for each position we check if there is a potential jump that reaches a GOOD</em> index (currPosition + nums[currPosition] &gt;= leftmostGoodIndex</code>). If we can reach a GOOD</em> index, then our position is itself GOOD</em>. Also, this new GOOD</em> position will be the new leftmost GOOD</em> index. Iteration continues until the beginning of the array. If first position is a GOOD</em> index then we can reach the last index from the first position.</p>
+To illustrate this scenario, we will use the diagram below, for input array nums = [9, 4, 2, 1, 0, 2, 0]</code>. We write G</strong> for GOOD</em>, B</strong> for BAD</em> and U</strong> for UNKNOWN</em>. Let's assume we have iterated all the way to position 0 and we need to decide if index 0 is GOOD</em>. Since index 1 was determined to be GOOD</em>, it is enough to jump there and then be sure we can eventually reach index 6. It does not matter that nums[0]</code> is big enough to jump all the way to the last index. All we need is one</strong> way.</p>
+
+
+
+Index</th>
+0</th>
+1</th>
+2</th>
+3</th>
+4</th>
+5</th>
+6</th>
+</tr>
+</thead>
+
+
+nums</td>
+9</td>
+4</td>
+2</td>
+1</td>
+0</td>
+2</td>
+0</td>
+</tr>
+
+memo</td>
+U</td>
+G</td>
+B</td>
+B</td>
+B</td>
+G</td>
+G</td>
+</tr>
+</tbody>
+</table>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> boolean</span> canJump</span>(</span>int</span>[]</span> nums</span>)</span> {</span>
+        int</span> lastPos</span> =</span> nums</span>.</span>length</span> -</span> 1</span>;</span>
+        for</span> (</span>int</span> i</span> =</span> nums</span>.</span>length</span> -</span> 1</span>;</span> i</span> &gt;=</span> 0</span>;</span> i</span>--)</span> {</span>
+            if</span> (</span>i</span> +</span> nums</span>[</span>i</span>]</span> &gt;=</span> lastPos</span>)</span> {</span>
+                lastPos</span> =</span> i</span>;</span>
+            }</span>
+        }</span>
+        return</span> lastPos</span> ==</span> 0</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.
+We are doing a single pass through the nums</code> array, hence <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> steps, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the length of array nums</code>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>.
+We are not using any extra memory.</p>
+</li>
+</ul>
+Conclusion</h2>
+The question left unanswered is how should one approach such a question in an interview scenario. I would say "it depends". The perfect solution is cleaner and shorter than all the other versions, but it might not be so straightforward to figure out.</p>
+The (recursive) backtracking is the easiest to figure out, so it is worth mentioning it verbally while warming up for the tougher challenge. It might be that your interviewer actually wants to see that solution, but if not, mention that there might be a dynamic programming solution and try to think how could you use a memoization table. If you figure it out and the interviewer wants you to go for the top-down approach, it will not generally be time to think of the bottom-up version, but I would always mention the advantages of this technique as a final thought in the interview.</p>
+Most people are stuck when converting from top-down Dynamic Programming (expressed naturally in recursion) to bottom-up. Practicing similar problems will help bridge this gap.</p>
+<h2 id="appendix-a-complexity-analysis-for-approach-1">Appendix A - Complexity Analysis for Approach #1</h2>
+There are <span class="maths katex-rendered">2</mn>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.664392em;"></span><span class="strut bottom" style="height: 0.664392em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span> (upper bound) ways of jumping from the first position to the last, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is the length of array nums</code>. We get this recursively. Let <span class="maths katex-rendered">T</mi>(</mo>x</mi>)</mo></mrow><annotation encoding="application/x-tex">T(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">x</span>)</span></span></span></span></span> be the number of possible ways of jumping from position x</strong> to position n</strong>. <span class="maths katex-rendered">T</mi>(</mo>n</mi>)</mo>=</mo>1</mn></mrow><annotation encoding="application/x-tex">T(n) = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">n</span>)</span>=</span><span class="mord mathrm">1</span></span></span></span></span> trivially. <span class="maths katex-rendered">T</mi>(</mo>x</mi>)</mo>=</mo>∑</mo>i</mi>=</mo>x</mi>+</mo>1</mn></mrow>n</mi></mrow></msubsup>T</mi>(</mo>i</mi>)</mo></mrow><annotation encoding="application/x-tex">T(x) = sum_{i = x + 1}^{n} T(i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1.10834em; vertical-align: -0.358341em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">x</span>)</span>=</span><span class="mop op-symbol small-op" style="top: -5e-06em;">∑</span><span class="" style="top: 0.30001em; margin-left: 0em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord scriptstyle cramped mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mathit mtight">x</span><span class="mbin mtight">+</span><span class="mord mathrm mtight">1</span></span></span></span><span class="" style="top: -0.364em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">i</span>)</span></span></span></span></span> because from position x</strong> we can potentially jump to all following positions i</strong> and then from there there are <span class="maths katex-rendered">T</mi>(</mo>i</mi>)</mo></mrow><annotation encoding="application/x-tex">T(i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">i</span>)</span></span></span></span></span> ways of continuing. Notice this is an upper bound.</p>
+
+<p class="maths katex-rendered">
+begin{align*}
+T(x) &amp;= sum_{i = x + 1}^{n} T(i) 
+T(x) &amp;= T(x + 1) + sum_{i = x + 2}^{n} T(i) 
+T(x) &amp;= T(x + 1) + T(x + 1) 
+T(x) &amp;= 2 * T(x + 1)
+end{align*}
+</span><script type="math/tex; mode=display">
+begin{align*}
+T(x) &= sum_{i = x + 1}^{n} T(i) 
+T(x) &= T(x + 1) + sum_{i = x + 2}^{n} T(i) 
+T(x) &= T(x + 1) + T(x + 1) 
+T(x) &= 2 * T(x + 1)
+end{align*}
+</script></p>
+</p>
+Now by induction, assume <span class="maths katex-rendered">T</mi>(</mo>x</mi>)</mo>=</mo>2</mn>n</mi>−</mo>x</mi>−</mo>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">T(x) = 2^{n - x - 1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">x</span>)</span>=</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span><span class="mbin mtight">−</span><span class="mord mathit mtight">x</span><span class="mbin mtight">−</span><span class="mord mathrm mtight">1</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span> and prove <span class="maths katex-rendered">T</mi>(</mo>x</mi>−</mo>1</mn>)</mo>=</mo>2</mn>n</mi>−</mo>(</mo>x</mi>−</mo>1</mn>)</mo>−</mo>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">T(x - 1) = 2^{n - (x - 1) - 1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.888em;"></span><span class="strut bottom" style="height: 1.138em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathit">x</span>−</span><span class="mord mathrm">1</span>)</span>=</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span><span class="mbin mtight">−</span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mbin mtight">−</span><span class="mord mathrm mtight">1</span><span class="mclose mtight">)</span><span class="mbin mtight">−</span><span class="mord mathrm mtight">1</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span>
+</p>
+
+<p class="maths katex-rendered">[
+begin{align*}
+T(x - 1) &amp;= 2 * T(x) 
+T(x - 1) &amp;= 2 * 2^{n - x - 1} 
+T(x - 1) &amp;= 2^{n - x - 1 + 1} 
+T(x - 1) &amp;= 2^{n - (x - 1) - 1}
+end{align*}
+]</p>
+</p>
+Therefore, since we start from position 1, <span class="maths katex-rendered">T</mi>(</mo>1</mn>)</mo>=</mo>2</mn>n</mi>−</mo>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">T(1) = 2^{n - 2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.13889em;">T</span>(</span><span class="mord mathrm">1</span>)</span>=</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span><span class="mbin mtight">−</span><span class="mord mathrm mtight">2</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></span></span>. Final complexity <span class="maths katex-rendered">O</mi>(</mo>2</mn>n</mi>−</mo>2</mn></mrow></msup>)</mo></mrow><annotation encoding="application/x-tex">O(2^{n - 2})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span><span class="mbin mtight">−</span><span class="mord mathrm mtight">2</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span> = <span class="maths katex-rendered">O</mi>(</mo>2</mn>n</mi></msup>)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">2</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span>.</p>
+References</h2>
+
+[1] <a href="https://en.wikipedia.org/wiki/Dynamic_programming">https://en.wikipedia.org/wiki/Dynamic_programming</a></li>
+[2] <a href="https://en.wikipedia.org/wiki/Memoization">https://en.wikipedia.org/wiki/Memoization</a></li>
+[3] <a href="https://en.wikipedia.org/wiki/Top-down_and_bottom-up_design">https://en.wikipedia.org/wiki/Top-down_and_bottom-up_design</a></li>
+</ul>
+Analysis written by: <a href="http://andrei.cioara.me">@aicioara</a></p>
+Thank you <a href="https://discuss.leetcode.com/user/jied333">@jied333</a> for correcting the backtracking complexity analysis.</p>

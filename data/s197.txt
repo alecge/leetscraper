@@ -1,0 +1,24 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-join-and-datediff-clause-accepted">Approach: Using JOIN and DATEDIFF() clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-join-and-datediff-clause-accepted">Approach: Using JOIN</code> and DATEDIFF()</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+MySQL uses <a href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html#function_datediff">DATEDIFF</a> to compare two date type values.</p>
+So, we can get the result by joining this table weather</strong> with itself and use this DATEDIFF()</code> function.</p>
+MySQL</strong></p>
+</span>SELECT</span>
+    weather</span>.</span>id</span> AS</span> 'Id'</span>
+FROM</span>
+    weather</span>
+        JOIN</span>
+    weather</span> w</span> ON</span> DATEDIFF</span>(</span>weather</span>.</span>date</span>,</span> w</span>.</span>date</span>)</span> =</span> 1</span>
+        AND</span> weather</span>.</span>Temperature</span> &gt;</span> w</span>.</span>Temperature</span>
+;</span>
+</pre></div>

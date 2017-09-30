@@ -1,0 +1,166 @@
+<div class="toc hide">
+
+<a href="#summary">Summary</a></li>
+<a href="#solution">Solution</a>
+<a href="#approach-1-brute-force-time-limit-exceeded">Approach #1 Brute Force [Time Limit Exceeded]</a></li>
+<a href="#approach-2-using-extra-array-accepted">Approach #2 Using Extra Array [Accepted]</a></li>
+<a href="#approach-3-using-cyclic-replacements-accepted">Approach #3 Using Cyclic Replacements [Accepted]</a></li>
+<a href="#approach-4-using-reverse-accepted">Approach #4 Using Reverse [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Summary</h2>
+We have to rotate the elements of the given array k times to the right.</p>
+Solution</h2>
+
+<h4 id="approach-1-brute-force-time-limit-exceeded">Approach #1 Brute Force [Time Limit Exceeded]</h4>
+The simplest approach is to rotate all the elements of the array in k steps
+ by rotating the elements by 1 unit in each step.</p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> void</span> rotate</span>(</span>int</span>[]</span> nums</span>,</span> int</span> k</span>)</span> {</span>
+        int</span> temp</span>,</span> previous</span>;</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> k</span>;</span> i</span>++)</span> {</span>
+            previous</span> =</span> nums</span>[</span>nums</span>.</span>length</span> -</span> 1</span>];</span>
+            for</span> (</span>int</span> j</span> =</span> 0</span>;</span> j</span> &lt;</span> nums</span>.</span>length</span>;</span> j</span>++)</span> {</span>
+                temp</span> =</span> nums</span>[</span>j</span>];</span>
+                nums</span>[</span>j</span>]</span> =</span> previous</span>;</span>
+                previous</span> =</span> temp</span>;</span>
+            }</span>
+        }</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>∗</mo>k</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n*k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>∗</span><span class="mord mathit" style="margin-right: 0.03148em;">k</span>)</span></span></span></span></span>. All the numbers are shifted by one step(<span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>)
+ k times(<span class="maths katex-rendered">O</mi>(</mo>k</mi>)</mo></mrow><annotation encoding="application/x-tex">O(k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.03148em;">k</span>)</span></span></span></span></span>).</li>
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>. No extra space is used.</li>
+</ul>
+
+<h4 id="approach-2-using-extra-array-accepted">Approach #2 Using Extra Array [Accepted]</h4>
+Algorithm</strong></p>
+We use an extra array in which we place every element of the array at its correct
+position i.e. the number at index <span class="maths katex-rendered">i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.65952em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span></span></span></span></span> in the original array is placed at the
+index <span class="maths katex-rendered">(i+k)%(length of array)</span><script type="math/tex">(i+k)%(length of array)</script></span>. Then, we copy the new array to the original one.</p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> void</span> rotate</span>(</span>int</span>[]</span> nums</span>,</span> int</span> k</span>)</span> {</span>
+        int</span>[]</span> a</span> =</span> new</span> int</span>[</span>nums</span>.</span>length</span>];</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> nums</span>.</span>length</span>;</span> i</span>++)</span> {</span>
+            a</span>[(</span>i</span> +</span> k</span>)</span> %</span> nums</span>.</span>length</span>]</span> =</span> nums</span>[</span>i</span>];</span>
+        }</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> nums</span>.</span>length</span>;</span> i</span>++)</span> {</span>
+            nums</span>[</span>i</span>]</span> =</span> a</span>[</span>i</span>];</span>
+        }</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. One pass is used to put the numbers in the new array.
+ And another pass to copy the new array to the original one.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Another array of the same size is used.</p>
+</li>
+</ul>
+
+<h4 id="approach-3-using-cyclic-replacements-accepted">Approach #3 Using Cyclic Replacements [Accepted]</h4>
+Algorithm</strong></p>
+We can directly place every number of the array at its required correct position.
+But if we do that, we will destroy the original element. Thus, we need to store
+the number being replaced in a <span class="maths katex-rendered">t</mi>e</mi>m</mi>p</mi></mrow><annotation encoding="application/x-tex">temp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.61508em;"></span><span class="strut bottom" style="height: 0.80952em; vertical-align: -0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">m</span><span class="mord mathit">p</span></span></span></span></span> variable. Then, we can place the replaced
+ number(<span class="maths katex-rendered">t</mi>e</mi>m</mi>p</mi></mrow><annotation encoding="application/x-tex">temp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.61508em;"></span><span class="strut bottom" style="height: 0.80952em; vertical-align: -0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">m</span><span class="mord mathit">p</span></span></span></span></span>) at its correct position and so on, <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> times, where <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> is
+ the length of array. We have chosen <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> to be the number of replacements since we have 
+ to shift all the elements of the array(which is <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>). But, there could be a problem with this method, if <span class="maths katex-rendered">(n%k=0)</span>
+ where <span class="maths katex-rendered">(k = k%n)</span>(since a value of <span class="maths katex-rendered">k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.03148em;">k</span></span></span></span></span> larger than <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> eventually leads to a <span class="maths katex-rendered">k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.03148em;">k</span></span></span></span></span> equivalent to <span class="maths katex-rendered">(k%n)</span>). In this case, while picking up numbers to be placed at the
+ correct position, we will eventually reach the number from which we originally started. Thus, in such a case, when
+ we hit the original number's index again, we start the same process with the number following it.</p>
+Now let's look at the proof of how the above method works. Suppose, we have <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> as the number of elements in the array and
+ <span class="maths katex-rendered">k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.03148em;">k</span></span></span></span></span> is the number of shifts required. Further, assume <span class="maths katex-rendered">(n%k=0)</span>. Now, when we start placing the elements at their correct position, in the first cycle all the numbers with their index <span class="maths katex-rendered">i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.65952em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span></span></span></span></span> satisfying <span class="maths katex-rendered">(i%k=0)</span> get placed at their required position. This happens because when we jump k steps every time, we will only hit the numbers k steps apart. We start with index <span class="maths katex-rendered">i</mi>=</mo>0</mn></mrow><annotation encoding="application/x-tex">i=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.65952em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span>=</span><span class="mord mathrm">0</span></span></span></span></span>, having <span class="maths katex-rendered">(i%k=0)</span>. Thus, we hit all the numbers satisfying the above condition in the first cycle. When we reach back the original index, we have placed <span class="maths katex-rendered">n</mi></mrow>k</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">frac{n}{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.695392em;"></span><span class="strut bottom" style="height: 1.04039em; vertical-align: -0.345em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="mopen sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="" style="top: 0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord scriptstyle cramped mtight"><span class="mord mathit mtight" style="margin-right: 0.03148em;">k</span></span></span></span><span class="" style="top: -0.23em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span class="" style="top: -0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span><span class="mclose sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span></span> elements at their correct position, since we hit only that many elements in the first cycle. Now, we increment the index for replacing the numbers. This time, we place other <span class="maths katex-rendered">n</mi></mrow>k</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">frac{n}{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.695392em;"></span><span class="strut bottom" style="height: 1.04039em; vertical-align: -0.345em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="mopen sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="" style="top: 0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord scriptstyle cramped mtight"><span class="mord mathit mtight" style="margin-right: 0.03148em;">k</span></span></span></span><span class="" style="top: -0.23em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span class="" style="top: -0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span><span class="mclose sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span></span> elements at their correct position, different from the ones placed correctly in the first cycle, because this time we hit all the numbers satisfy the condition <span class="maths katex-rendered">(i%k=1)</span>. When we hit the starting number again, we increment the index and repeat the same process from <span class="maths katex-rendered">i</mi>=</mo>1</mn></mrow><annotation encoding="application/x-tex">i=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.65952em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span>=</span><span class="mord mathrm">1</span></span></span></span></span> for all the indices satisfying <span class="maths katex-rendered">(i%k==1)</span>. This happens till we reach the number with the index <span class="maths katex-rendered">(i%k=0)</span> again, which occurs for <span class="maths katex-rendered">i</mi>=</mo>k</mi></mrow><annotation encoding="application/x-tex">i=k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span>=</span><span class="mord mathit" style="margin-right: 0.03148em;">k</span></span></span></span></span>. We will reach such a number after a total of k cycles. Now, the total count of numbers exclusive numbers placed at their correct position will be <span class="maths katex-rendered">k</mi>×</mo>n</mi></mrow>k</mi></mrow></mfrac>=</mo>n</mi></mrow><annotation encoding="application/x-tex">k times frac{n}{k}=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.695392em;"></span><span class="strut bottom" style="height: 1.04039em; vertical-align: -0.345em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.03148em;">k</span>×</span><span class="mord reset-textstyle textstyle uncramped"><span class="mopen sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="" style="top: 0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped mtight"><span class="mord scriptstyle cramped mtight"><span class="mord mathit mtight" style="margin-right: 0.03148em;">k</span></span></span></span><span class="" style="top: -0.23em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span class="" style="top: -0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord scriptstyle uncramped mtight"><span class="mord mathit mtight">n</span></span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span><span class="mclose sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span>=</span><span class="mord mathit">n</span></span></span></span></span>. Thus, all the numbers will be placed at their correct position.</p>
+Look at the following example to clarify the process:
+ nums: [1, 2, 3, 4, 5, 6]
+k: 2</code></p>
+<img alt="Rotate Array" src="https://leetcode.com/media/original_images/189_Rotate_Array.png"></p>
+java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> void</span> rotate</span>(</span>int</span>[]</span> nums</span>,</span> int</span> k</span>)</span> {</span>
+        k</span> =</span> k</span> %</span> nums</span>.</span>length</span>;</span>
+        int</span> count</span> =</span> 0</span>;</span>
+        for</span> (</span>int</span> start</span> =</span> 0</span>;</span> count</span> &lt;</span> nums</span>.</span>length</span>;</span> start</span>++)</span> {</span>
+            int</span> current</span> =</span> start</span>;</span>
+            int</span> prev</span> =</span> nums</span>[</span>start</span>];</span>
+            do</span> {</span>
+                int</span> next</span> =</span> (</span>current</span> +</span> k</span>)</span> %</span> nums</span>.</span>length</span>;</span>
+                int</span> temp</span> =</span> nums</span>[</span>next</span>];</span>
+                nums</span>[</span>next</span>]</span> =</span> prev</span>;</span>
+                prev</span> =</span> temp</span>;</span>
+                current</span> =</span> next</span>;</span>
+                count</span>++;</span>
+            }</span> while</span> (</span>start</span> !=</span> current</span>);</span>
+        }</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Only one pass is used.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>. Constant extra space is used.</p>
+</li>
+</ul>
+
+<h4 id="approach-4-using-reverse-accepted">Approach #4 Using Reverse [Accepted]</h4>
+Algorithm</strong></p>
+This approach is based on the fact that when we rotate the array k times, <span class="maths katex-rendered">(k%n)</span> elements from the back end of the array come to the front and the rest of the elements from the front shift backwards.</p>
+In this approach, we firstly reverse all the elements of the array. Then, reversing the first k elements followed by reversing the rest <span class="maths katex-rendered">n</mi>−</mo>k</mi></mrow><annotation encoding="application/x-tex">n-k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.77777em; vertical-align: -0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span>−</span><span class="mord mathit" style="margin-right: 0.03148em;">k</span></span></span></span></span> elements gives us the required result.</p>
+Let <span class="maths katex-rendered">n</mi>=</mo>7</mn></mrow><annotation encoding="application/x-tex">n=7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.64444em;"></span><span class="strut bottom" style="height: 0.64444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span>=</span><span class="mord mathrm">7</span></span></span></span></span> and <span class="maths katex-rendered">k</mi>=</mo>3</mn></mrow><annotation encoding="application/x-tex">k=3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.03148em;">k</span>=</span><span class="mord mathrm">3</span></span></span></span></span>.</p>
+</span>Original List                   : 1 2 3 4 5 6 7
+After reversing all numbers     : 7 6 5 4 3 2 1
+After reversing first k numbers : 5 6 7 4 3 2 1
+After revering last n-k numbers : 5 6 7 1 2 3 4 --&gt; Result
+</pre></div>
+
+
+java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> void</span> rotate</span>(</span>int</span>[]</span> nums</span>,</span> int</span> k</span>)</span> {</span>
+        k</span> %=</span> nums</span>.</span>length</span>;</span>
+        reverse</span>(</span>nums</span>,</span> 0</span>,</span> nums</span>.</span>length</span> -</span> 1</span>);</span>
+        reverse</span>(</span>nums</span>,</span> 0</span>,</span> k</span> -</span> 1</span>);</span>
+        reverse</span>(</span>nums</span>,</span> k</span>,</span> nums</span>.</span>length</span> -</span> 1</span>);</span>
+    }</span>
+    public</span> void</span> reverse</span>(</span>int</span>[]</span> nums</span>,</span> int</span> start</span>,</span> int</span> end</span>)</span> {</span>
+        while</span> (</span>start</span> &lt;</span> end</span>)</span> {</span>
+            int</span> temp</span> =</span> nums</span>[</span>start</span>];</span>
+            nums</span>[</span>start</span>]</span> =</span> nums</span>[</span>end</span>];</span>
+            nums</span>[</span>end</span>]</span> =</span> temp</span>;</span>
+            start</span>++;</span>
+            end</span>--;</span>
+        }</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> elements are reversed a total of three times.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathrm">1</span>)</span></span></span></span></span>. No extra space is used.</p>
+</li>
+</ul>
+Analysis written by: <a href="https://leetcode.com/vinod23">@vinod23</a></p>

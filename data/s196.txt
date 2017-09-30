@@ -1,0 +1,39 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-delete-and-where-clause-accepted">Approach: Using DELETE and WHERE clause [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-delete-and-where-clause-accepted">Approach: Using DELETE</code> and WHERE</code> clause [Accepted]</h4>
+Algorithm</strong></p>
+By joining this table with itself on the Email</em> column, we can get the following code.</p>
+</span>SELECT</span> p1</span>.</span>*</span>
+FROM</span> Person</span> p1</span>,</span>
+    Person</span> p2</span>
+WHERE</span>
+    p1</span>.</span>Email</span> =</span> p2</span>.</span>Email</span>
+;</span>
+</pre></div>
+
+
+Then we need to find the bigger id having same email address with other records. So we can add a new condition to the WHERE</code> clause like this.</p>
+</span>SELECT</span> p1</span>.</span>*</span>
+FROM</span> Person</span> p1</span>,</span>
+    Person</span> p2</span>
+WHERE</span>
+    p1</span>.</span>Email</span> =</span> p2</span>.</span>Email</span> AND</span> p1</span>.</span>Id</span> &gt;</span> p2</span>.</span>Id</span>
+;</span>
+</pre></div>
+
+
+As we already get the records to be deleted, we can alter this statement to DELETE</code> in the end.</p>
+MySQL</strong></p>
+</span>DELETE</span> p1</span> FROM</span> Person</span> p1</span>,</span>
+    Person</span> p2</span>
+WHERE</span>
+    p1</span>.</span>Email</span> =</span> p2</span>.</span>Email</span> AND</span> p1</span>.</span>Id</span> &gt;</span> p2</span>.</span>Id</span>
+</pre></div>

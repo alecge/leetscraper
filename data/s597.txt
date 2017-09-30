@@ -1,0 +1,20 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-using-mod-function-accepted">Approach: Using MOD() function [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-using-mod-function-accepted">Approach: Using MOD()</code> function [Accepted]</h4>
+Algorithm</strong></p>
+We can use the mod(id,2)=1</code> to determine the odd id, and then add a description != 'boring'</code> should address this problem.</p>
+MySQL</strong></p>
+</span>select</span> *</span>
+from</span> cinema</span>
+where</span> mod</span>(</span>id</span>,</span> 2</span>)</span> =</span> 1</span> and</span> description</span> !=</span> 'boring'</span>
+order</span> by</span> rating</span> DESC</span>
+;</span>
+</pre></div>

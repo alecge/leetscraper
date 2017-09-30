@@ -6,7 +6,7 @@ import platform
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import re
 
-
+print("this is the new code")
 """
 if platform.system() == 'Windows':
     
@@ -39,9 +39,11 @@ for option in show_all_elements.find_elements_by_tag_name('option'):
 problem_parent = driver.find_element_by_css_selector("""#question-app > div > div:nth-child(2) > div.question-list-base > div.table-responsive.question-list-table > table > tbody.reactable-data""")
 problems_raw = problem_parent.find_elements_by_tag_name('tr')
 #print(problems)
-pNumber = 165
+pNumber = 10
 
 while(True):
+    print("> Working on problem " + str(pNumber))
+
     driver.implicitly_wait(2)
     problem_parent = driver.find_element_by_css_selector(
         """#question-app > div > div:nth-child(2) > div.question-list-base > div.table-responsive.question-list-table > table > tbody.reactable-data""")
@@ -50,14 +52,18 @@ while(True):
     problem1 = problems_raw[pNumber - 1].find_elements_by_tag_name('td')[2]
     problem2 = problem1.find_element_by_tag_name('div')
     problem = problem2.find_element_by_tag_name('a')
-
-    print(problem)
     problem.click()
+
+    print("----> Clicking on problem")
 
     if "https://leetcode.com/accounts/login/" in driver.current_url:
         driver.back()
+        driver.implicitly_wait(3)
         pNumber += 1
+        print("----> Premium problem, going back")
     else:
+
+        print("----> Getting description text")
         descText = driver.find_element_by_xpath('//*[@id="descriptionContent"]/div[1]/div/div[2]')
 
         p_file_name = 'data/p' + str(pNumber) + '.txt'
@@ -67,28 +73,36 @@ while(True):
 
 
         try:
+
+            print("----> Attempting to get solution")
             solutionTab = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[1]/nav/a[5]')
             solutionTab.click()
             solution = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[2]/div/div[2]/div[1]/div')
             '//*[@id="descriptionContent"]/div[1]/div/div[2]'
 
             s_file_name = 'data/s' + str(pNumber) + '.txt'
+            s_file_name_text = 'data/s' + str(pNumber) + '-text.txt'
 
             #strippedSolution = solution.get_attribute('innerHTML')
             #strippedSolution = strippedSolution.replace(u"\u2212", "- ")
 
             solution_text = solution.get_attribute('innerHTML')
 
+
             solution_text = re.sub('<\w*\s*(\w+=\"(\w+\s*|\w+-\w+)\")*>', "", solution_text)
             solution_text = solution_text.replace("\\", "")
-
-            print(solution_text)
 
 
             with open(s_file_name, 'w') as w:
                 w.write(solution_text)
+
+            with open(s_file_name_text, 'w') as w:
+                w.write(solution.text)
         except:
-            print("No solution")
+            print("----> No solution")
+            s_file_name = 'data/s' + str(pNumber) + '.txt'
+            with open(s_file_name, 'w') as w:
+                w.write("No solution")
 
     driver.get('https://leetcode.com/problemset/all/')
     driver.implicitly_wait(4)

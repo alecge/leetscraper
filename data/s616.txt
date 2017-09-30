@@ -1,0 +1,129 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-1-partioning-coefficients-accepted">Approach #1 Partioning Coefficients [Accepted]</a></li>
+<a href="#approach-2-using-regex-for-spliting-accepted">Approach #2 Using regex for spliting [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-1-partioning-coefficients-accepted">Approach #1 Partioning Coefficients [Accepted]</h4>
+In the current approach, we start by splitting the given <span class="maths katex-rendered">e</mi>q</mi>u</mi>a</mi>t</mi>i</mi>o</mi>n</mi></mrow><annotation encoding="application/x-tex">equation</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.65952em;"></span><span class="strut bottom" style="height: 0.85396em; vertical-align: -0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">e</span><span class="mord mathit" style="margin-right: 0.03588em;">q</span><span class="mord mathit">u</span><span class="mord mathit">a</span><span class="mord mathit">t</span><span class="mord mathit">i</span><span class="mord mathit">o</span><span class="mord mathit">n</span></span></span></span></span> based on =</code> sign. This way, we've separated the left and right hand side of this equation. Once this is done, we need to extract the individual elements(i.e. x</code>'s and the numbers) from both sides of the equation. To do so, we make use of breakIt</code> function, in which we traverse over the given equation(either left hand side or right hand side), and put the separated parts into an array. </p>
+Now, the idea is as follows. We treat the given equation as if we're bringing all the x</code>'s on the left hand side and all the rest of the numbers on the right hand side as done below for an example.</p>
+x+5-3+x=6+x-2</code></p>
+x+x-x=6-2-5+3</code></p>
+Thus, every x</code> in the left hand side of the given equation is treated as positive, while that on the right hand side is treated as negative, in the current implementation. </p>
+Likewise, every number on the left hand side is treated as negative, while that on the right hand side is treated as positive. Thus, by doing so, we obtain all the x</code>'s in the new <span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> and all the numbers in the new <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> of the original equation. </p>
+Further, in case of an x</code>, we also need to find its corresponding coefficients in order to evaluate the final effective coefficient of x</code> on the left hand side. We also evaluate the final effective number on the right hand side as well.</p>
+Now, in case of a unique solution, the ratio of the effective <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> and <span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> gives the required result. In case of infinite solutions, both the effective <span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> and <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> turns out to be zero e.g. x+1=x+1</code>. In case of no solution, the coefficient of x</code>(<span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span>) turns out to be zero, but the effective number on the <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> is non-zero.</p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> String</span> coeff</span>(</span>String</span> x</span>)</span> {</span>
+        if</span> (</span>x</span>.</span>length</span>()</span> &gt;</span> 1</span> &amp;&amp;</span> x</span>.</span>charAt</span>(</span>x</span>.</span>length</span>()</span> -</span> 2</span>)</span> &gt;=</span> '0'</span> &amp;&amp;</span> x</span>.</span>charAt</span>(</span>x</span>.</span>length</span>()</span> -</span> 2</span>)</span> &lt;=</span> '9'</span>)</span>
+            return</span> x</span>.</span>replace</span>(</span>"x"</span>,</span> ""</span>);</span>
+        return</span> x</span>.</span>replace</span>(</span>"x"</span>,</span> "1"</span>);</span>
+    }</span>
+    public</span> String</span> solveEquation</span>(</span>String</span> equation</span>)</span> {</span>
+        String</span>[]</span> lr</span> =</span> equation</span>.</span>split</span>(</span>"="</span>);</span>
+        int</span> lhs</span> =</span> 0</span>,</span> rhs</span> =</span> 0</span>;</span>
+        for</span> (</span>String</span> x</span>:</span> breakIt</span>(</span>lr</span>[</span>0</span>]))</span> {</span>
+            if</span> (</span>x</span>.</span>indexOf</span>(</span>"x"</span>)</span> &gt;=</span> 0</span>)</span> {</span>
+                lhs</span> +=</span> Integer</span>.</span>parseInt</span>(</span>coeff</span>(</span>x</span>));</span>
+            }</span> else</span>
+                rhs</span> -=</span> Integer</span>.</span>parseInt</span>(</span>x</span>);</span>
+        }</span>
+        for</span> (</span>String</span> x</span>:</span> breakIt</span>(</span>lr</span>[</span>1</span>]))</span> {</span>
+            if</span> (</span>x</span>.</span>indexOf</span>(</span>"x"</span>)</span> &gt;=</span> 0</span>)</span>
+                lhs</span> -=</span> Integer</span>.</span>parseInt</span>(</span>coeff</span>(</span>x</span>));</span>
+            else</span>
+                rhs</span> +=</span> Integer</span>.</span>parseInt</span>(</span>x</span>);</span>
+        }</span>
+        if</span> (</span>lhs</span> ==</span> 0</span>)</span> {</span>
+            if</span> (</span>rhs</span> ==</span> 0</span>)</span>
+                return</span> "Infinite solutions"</span>;</span>
+            else</span>
+                return</span> "No solution"</span>;</span>
+        }</span>
+        return</span> "x="</span> +</span> rhs</span> /</span> lhs</span>;</span>
+    }</span>
+    public</span> List</span> &lt;</span> String</span> &gt;</span> breakIt</span>(</span>String</span> s</span>)</span> {</span>
+        List</span> &lt;</span> String</span> &gt;</span> res</span> =</span> new</span> ArrayList</span> &lt;</span> &gt;</span> ();</span>
+        String</span> r</span> =</span> ""</span>;</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> s</span>.</span>length</span>();</span> i</span>++)</span> {</span>
+            if</span> (</span>s</span>.</span>charAt</span>(</span>i</span>)</span> ==</span> '+'</span> ||</span> s</span>.</span>charAt</span>(</span>i</span>)</span> ==</span> '-'</span>)</span> {</span>
+                if</span> (</span>r</span>.</span>length</span>()</span> &gt;</span> 0</span>)</span>
+                    res</span>.</span>add</span>(</span>r</span>);</span>
+                r</span> =</span> ""</span> +</span> s</span>.</span>charAt</span>(</span>i</span>);</span>
+            }</span> else</span>
+                r</span> +=</span> s</span>.</span>charAt</span>(</span>i</span>);</span>
+        }</span>
+        res</span>.</span>add</span>(</span>r</span>);</span>
+        return</span> res</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Generating coefficients and findinn <span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> and <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> will take <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. ArrayList <span class="maths katex-rendered">r</mi>e</mi>s</mi></mrow><annotation encoding="application/x-tex">res</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">e</span><span class="mord mathit">s</span></span></span></span></span> size can grow upto <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>.</p>
+</li>
+</ul>
+
+<h4 id="approach-2-using-regex-for-spliting-accepted">Approach #2 Using regex for spliting [Accepted]</h4>
+Algorithm</strong></p>
+In the last approach, we made use of a new function breakIt</code> to obtain the individual components of either the left hand side or the right hand side. Instead of doing so, we can also make use of splitting based on +</code> or -</code> sign, to obtain the individual elements. The rest of the process remains the same as in the last approach. </p>
+In order to do the splitting, we make use of an expression derived from regular expressions(regex). Simply speaking, regex is a functionality used to match a target string based on some given criteria. The ?=n quantifier, in regex, matches any string that is followed by a specific string <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>. What it's saying is that the captured match must be followed by <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> but the <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span> itself isn't captured.</p>
+By making use of this kind of expression in the split</code> functionality, we make sure that the partitions are obtained such that the +</code> or -</code> sign remains along with the parts(numbers or coefficients) even after the splitting.</p>
+Java</strong></p>
+</span>public</span> class</span> Solution</span> {</span>
+    public</span> String</span> coeff</span>(</span>String</span> x</span>)</span> {</span>
+        if</span> (</span>x</span>.</span>length</span>()</span> &gt;</span> 1</span> &amp;&amp;</span> x</span>.</span>charAt</span>(</span>x</span>.</span>length</span>()</span> -</span> 2</span>)</span> &gt;=</span> '0'</span> &amp;&amp;</span> x</span>.</span>charAt</span>(</span>x</span>.</span>length</span>()</span> -</span> 2</span>)</span> &lt;=</span> '9'</span>)</span>
+            return</span> x</span>.</span>replace</span>(</span>"x"</span>,</span> ""</span>);</span>
+        return</span> x</span>.</span>replace</span>(</span>"x"</span>,</span> "1"</span>);</span>
+    }</span>
+    public</span> String</span> solveEquation</span>(</span>String</span> equation</span>)</span> {</span>
+        String</span>[]</span> lr</span> =</span> equation</span>.</span>split</span>(</span>"="</span>);</span>
+        int</span> lhs</span> =</span> 0</span>,</span> rhs</span> =</span> 0</span>;</span>
+        for</span> (</span>String</span> x</span>:</span> lr</span>[</span>0</span>].</span>split</span>(</span>"(?=+)|(?=-)"</span>))</span> {</span>
+            if</span> (</span>x</span>.</span>indexOf</span>(</span>"x"</span>)</span> &gt;=</span> 0</span>)</span> {</span>
+
+                lhs</span> +=</span> Integer</span>.</span>parseInt</span>(</span>coeff</span>(</span>x</span>));</span>
+            }</span> else</span>
+                rhs</span> -=</span> Integer</span>.</span>parseInt</span>(</span>x</span>);</span>
+        }</span>
+        for</span> (</span>String</span> x</span>:</span> lr</span>[</span>1</span>].</span>split</span>(</span>"(?=+)|(?=-)"</span>))</span> {</span>
+            if</span> (</span>x</span>.</span>indexOf</span>(</span>"x"</span>)</span> &gt;=</span> 0</span>)</span>
+                lhs</span> -=</span> Integer</span>.</span>parseInt</span>(</span>coeff</span>(</span>x</span>));</span>
+            else</span>
+                rhs</span> +=</span> Integer</span>.</span>parseInt</span>(</span>x</span>);</span>
+        }</span>
+        if</span> (</span>lhs</span> ==</span> 0</span>)</span> {</span>
+            if</span> (</span>rhs</span> ==</span> 0</span>)</span>
+                return</span> "Infinite solutions"</span>;</span>
+            else</span>
+                return</span> "No solution"</span>;</span>
+        }</span> else</span>
+            return</span> "x="</span> +</span> rhs</span> /</span> lhs</span>;</span>
+    }</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. Generating coefficients and finding <span class="maths katex-rendered">l</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">lhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.01968em;">l</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> and <span class="maths katex-rendered">r</mi>h</mi>s</mi></mrow><annotation encoding="application/x-tex">rhs</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">h</span><span class="mord mathit">s</span></span></span></span></span> will take <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>.</p>
+</li>
+
+Space complexity : <span class="maths katex-rendered">O</mi>(</mo>n</mi>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit">n</span>)</span></span></span></span></span>. ArrayList <span class="maths katex-rendered">r</mi>e</mi>s</mi></mrow><annotation encoding="application/x-tex">res</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span><span class="mord mathit">e</span><span class="mord mathit">s</span></span></span></span></span> size can grow upto <span class="maths katex-rendered">n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span></span>.</p>
+</li>
+</ul>
+
+Analysis written by: <a href="https://leetcode.com/vinod23">@vinod23</a></p>

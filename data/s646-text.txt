@@ -1,0 +1,127 @@
+Solution
+Approach #1: Brute Force [Accepted]
+Intuition and Algorithm
+Traverse the tree with a depth-first search, and record every unique value in the tree using a Set structure uniques.
+Then, we'll look through the recorded values for the second minimum. The first minimum must be
+\text{root.val}
+root.val.
+Java
+class Solution {
+    public void dfs(TreeNode root, Set<Integer> uniques) {
+        if (root != null) {
+            uniques.add(root.val);
+            dfs(root.left, uniques);
+            dfs(root.right, uniques);
+        }
+    }
+    public int findSecondMinimumValue(TreeNode root) {
+        Set<Integer> uniques = new HashSet<Integer>();
+        dfs(root, uniques);
+
+        int min1 = root.val;
+        long ans = Long.MAX_VALUE;
+        for (int v : uniques) {
+            if (min1 < v && v < ans) ans = v;
+        }
+        return ans < Long.MAX_VALUE ? (int) ans : -1;
+    }
+}
+Python
+class Solution(object):
+    def findSecondMinimumValue(self, root):
+        def dfs(node):
+            if node:
+                uniques.add(node.val)
+                dfs(node.left)
+                dfs(node.right)
+
+        uniques = set()
+        dfs(root)
+
+        min1, ans = root.val, float('inf')
+        for v in uniques:
+            if min1 < v < ans:
+                ans = v
+
+        return ans if ans < float('inf') else -1
+Complexity Analysis
+Time Complexity:
+O(N)
+O(N), where
+N
+N is the total number of nodes in the given tree. We visit each node exactly once, and scan through the
+O(N)
+O(N) values in unique once.
+Space Complexity:
+O(N)
+O(N), the information stored in uniques.
+Approach #2: Ad-Hoc [Accepted]
+Intuition and Algorithm
+Let
+\text{min1 = root.val}
+min1 = root.val. When traversing the tree at some node,
+\text{node}
+node, if \text{node.val > min1}, we know all values in the subtree at
+\text{node}
+node are at least
+\text{node.val}
+node.val, so there cannot be a better candidate for the second minimum in this subtree. Thus, we do not need to search this subtree.
+Also, as we only care about the second minimum
+\text{ans}
+ans, we do not need to record any values that are larger than our current candidate for the second minimum, so unlike Approach #1 we can skip maintaining a Set of values(uniques) entirely.
+Java
+class Solution {
+    int min1;
+    long ans = Long.MAX_VALUE;
+
+    public void dfs(TreeNode root) {
+        if (root != null) {
+            if (min1 < root.val && root.val < ans) {
+                ans = root.val;
+            } else if (min1 == root.val) {
+                dfs(root.left);
+                dfs(root.right);
+            }
+        }
+    }
+    public int findSecondMinimumValue(TreeNode root) {
+        min1 = root.val;
+        dfs(root);
+        return ans < Long.MAX_VALUE ? (int) ans : -1;
+    }
+}
+Python
+def findSecondMinimumValue(self, root):
+    self.ans = float('inf')
+    min1 = root.val
+
+    def dfs(node):
+        if node:
+            if min1 < node.val < self.ans:
+                self.ans = node.val
+            elif node.val == min1:
+                dfs(node.left)
+                dfs(node.right)
+
+    dfs(root)
+    return self.ans if self.ans < float('inf') else -1
+Complexity Analysis
+Time Complexity:
+O(N)
+O(N), where
+N
+N is the total number of nodes in the given tree. We visit each node at most once.
+Space Complexity:
+O(N)
+O(N). The information stored in
+\text{ans}
+ans and
+\text{min1}
+min1 is
+O(1)
+O(1), but our depth-first search may store up to
+O(h) = O(N)
+O(h)=O(N) information in the call stack, where
+h
+h is the height of the tree.
+Analysis written by: @awice

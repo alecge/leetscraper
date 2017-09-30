@@ -1,0 +1,186 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-1-brute-force-time-limit-exceeded">Approach #1 Brute force [Time Limit Exceeded]</a></li>
+<a href="#approach-2-using-bfs-accepted">Approach #2 Using BFS [Accepted]</a></li>
+<a href="#approach-3-dp-approach-accepted">Approach #3 DP Approach [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-1-brute-force-time-limit-exceeded">Approach #1 Brute force [Time Limit Exceeded]</h4>
+Intuition</strong></p>
+Do what the question says.</p>
+Algorithm</strong></p>
+
+Initialize dist[i][j]=INT_MAX</code> for all {i,j}</code> cells.</li>
+Iterate over the matrix.</li>
+If cell is 0</code>, dist[i][j]=0</code>,</li>
+Else, for each 1</code> cell,
+Iterate over the entire matrix</li>
+If the cell is 0</code>, calculate its distance from current cell as abs(k-i)+abs(l-j)</code>.</li>
+If the distance is smaller than the current distance, update it.</li>
+</ul>
+</li>
+</ul>
+C++</strong></p>
+</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> updateMatrix</span>(</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;&amp;</span> matrix</span>)</span>
+{</span>
+    int</span> rows</span> =</span> matrix</span>.</span>size</span>();</span>
+    if</span> (</span>rows</span> ==</span> 0</span>)</span>
+        return</span> matrix</span>;</span>
+    int</span> cols</span> =</span> matrix</span>[</span>0</span>].</span>size</span>();</span>
+    vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> dist</span>(</span>rows</span>,</span> vector</span>&lt;</span>int</span>&gt;</span>(</span>cols</span>,</span> INT_MAX</span>));</span>
+    for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> rows</span>;</span> i</span>++</span>)</span> {</span>
+        for</span> (</span>int</span> j</span> =</span> 0</span>;</span> j</span> &lt;</span> cols</span>;</span> j</span>++</span>)</span> {</span>
+            if</span> (</span>matrix</span>[</span>i</span>][</span>j</span>]</span> ==</span> 0</span>)</span>
+                dist</span>[</span>i</span>][</span>j</span>]</span> =</span> 0</span>;</span>
+            else</span> {</span>
+                for</span> (</span>int</span> k</span> =</span> 0</span>;</span> k</span> &lt;</span> rows</span>;</span> k</span>++</span>)</span>
+                    for</span> (</span>int</span> l</span> =</span> 0</span>;</span> l</span> &lt;</span> cols</span>;</span> l</span>++</span>)</span>
+                        if</span> (</span>matrix</span>[</span>k</span>][</span>l</span>]</span> ==</span> 0</span>)</span> {</span>
+                            int</span> dist_01</span> =</span> abs</span>(</span>k</span> -</span> i</span>)</span> +</span> abs</span>(</span>l</span> -</span> j</span>);</span>
+                            dist</span>[</span>i</span>][</span>j</span>]</span> =</span> min</span>(</span>dist</span>[</span>i</span>][</span>j</span>],</span> abs</span>(</span>k</span> -</span> i</span>)</span> +</span> abs</span>(</span>l</span> -</span> j</span>));</span>
+                        }</span>
+            }</span>
+        }</span>
+    }</span>
+    return</span> dist</span>;</span>
+}</span>
+</pre></div>
+
+
+Complexity Analysis</strong></p>
+
+
+Time complexity: <span class="maths katex-rendered">O</mi>(</mo>(</mo>r</mi>⋅</mo>c</mi>)</mo>2</mn></msup>)</mo></mrow><annotation encoding="application/x-tex">O((r cdot c)^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.814108em;"></span><span class="strut bottom" style="height: 1.06411em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathrm mtight">2</span></span></span><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span>)</span></span></span></span></span>.
+Iterating over the entire matrix for each 1</code> in the matrix.</p>
+</li>
+
+Space complexity: <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span>.
+No extra space required than the vector&lt;vector&lt;int&gt; &gt; dist</code></p>
+</li>
+</ul>
+
+<h4 id="approach-2-using-bfs-accepted">Approach #2 Using BFS [Accepted]</h4>
+Intuition</strong></p>
+A better brute force</em>:
+Looking over the entire matrix appears wasteful and hence, we can use Breadth First Search(BFS) to limit the search to the nearest 0</code> found for each 1</code>. As soon as a 0</code> appears during the BFS, we know that the 0</code> is nearest, and hence, we move to the next 1</code>.</p>
+Think again</em>:
+But, in this approach, we will only be able to update the distance of one 1</code> using one BFS, which could in fact, result in slightly higher complexity than the Approach #1 brute force.
+But hey,this could be optimised if we start the BFS from 0</code>s and thereby, updating the distances of all the 1</code>s in the path.</p>
+Algorithm</strong></p>
+
+For our BFS routine, we keep a queue, q</code> to maintain the queue of cells to be examined next.</li>
+We start by adding all the cells with 0</code>s to q</code>.</li>
+Intially, distance for each 0</code> cell is 0</code> and distance for each 1</code> is INT_MAX</code>, which is updated during the BFS.</li>
+Pop the cell from queue, and examine its neighbours. If the new calculated distance for neighbour {i,j}</code> is smaller, we add {i,j}</code> to q</code> and update dist[i][j]</code>.</li>
+</ul>
+C++</strong></p>
+</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> updateMatrix</span>(</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;&amp;</span> matrix</span>)</span>
+{</span>
+    int</span> rows</span> =</span> matrix</span>.</span>size</span>();</span>
+    if</span> (</span>rows</span> ==</span> 0</span>)</span>
+        return</span> matrix</span>;</span>
+    int</span> cols</span> =</span> matrix</span>[</span>0</span>].</span>size</span>();</span>
+    vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> dist</span>(</span>rows</span>,</span> vector</span>&lt;</span>int</span>&gt;</span>(</span>cols</span>,</span> INT_MAX</span>));</span>
+    queue</span>&lt;</span>pair</span>&lt;</span>int</span>,</span> int</span>&gt;</span> &gt;</span> q</span>;</span>
+    for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> rows</span>;</span> i</span>++</span>)</span>
+        for</span> (</span>int</span> j</span> =</span> 0</span>;</span> j</span> &lt;</span> cols</span>;</span> j</span>++</span>)</span>
+            if</span> (</span>matrix</span>[</span>i</span>][</span>j</span>]</span> ==</span> 0</span>)</span> {</span>
+                dist</span>[</span>i</span>][</span>j</span>]</span> =</span> 0</span>;</span>
+                q</span>.</span>push</span>({</span> i</span>,</span> j</span> });</span> //Put all 0s in the queue.</span>
+            }</span>
+
+    int</span> dir</span>[</span>4</span>][</span>2</span>]</span> =</span> {</span> {</span> -</span>1</span>,</span> 0</span> },</span> {</span> 1</span>,</span> 0</span> },</span> {</span> 0</span>,</span> -</span>1</span> },</span> {</span> 0</span>,</span> 1</span> }</span> };</span>
+    while</span> (</span>!</span>q</span>.</span>empty</span>())</span> {</span>
+        pair</span>&lt;</span>int</span>,</span> int</span>&gt;</span> curr</span> =</span> q</span>.</span>front</span>();</span>
+        q</span>.</span>pop</span>();</span>
+        for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> 4</span>;</span> i</span>++</span>)</span> {</span>
+            int</span> new_r</span> =</span> curr</span>.</span>first</span> +</span> dir</span>[</span>i</span>][</span>0</span>],</span> new_c</span> =</span> curr</span>.</span>second</span> +</span> dir</span>[</span>i</span>][</span>1</span>];</span>
+            if</span> (</span>new_r</span> &gt;=</span> 0</span> &amp;&amp;</span> new_c</span> &gt;=</span> 0</span> &amp;&amp;</span> new_r</span> &lt;</span> rows</span> &amp;&amp;</span> new_c</span> &lt;</span> cols</span>)</span> {</span>
+                if</span> (</span>dist</span>[</span>new_r</span>][</span>new_c</span>]</span> &gt;</span> dist</span>[</span>curr</span>.</span>first</span>][</span>curr</span>.</span>second</span>]</span> +</span> 1</span>)</span> {</span>
+                    dist</span>[</span>new_r</span>][</span>new_c</span>]</span> =</span> dist</span>[</span>curr</span>.</span>first</span>][</span>curr</span>.</span>second</span>]</span> +</span> 1</span>;</span>
+                    q</span>.</span>push</span>({</span> new_r</span>,</span> new_c</span> });</span>
+                }</span>
+            }</span>
+        }</span>
+    }</span>
+    return</span> dist</span>;</span>
+}</span>
+</pre></div>
+
+
+Complexity analysis</strong></p>
+
+Time complexity: <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span>.</li>
+
+Since, the new cells are added to the queue only if their current distance is greater than the calculated distance, cells are not likely to be added multiple times.</p>
+</li>
+
+Space complexity: <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span>. Additional <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span> for queue than in Approach #1</p>
+</li>
+</ul>
+
+<h4 id="approach-3-dp-approach-accepted">Approach #3 DP Approach [Accepted]</h4>
+Intuition</strong></p>
+The distance of a cell from 0</code> can be calculated if we know the nearest distance for all the neighbours, in which case the distance is minimum distance of any neightbour + 1. And, instantly, the word come to mind DP!!
+For each 1</code>, the minimum path to 0</code> can be in any direction. So, we need to check all the 4 direction. In one iteration from top to bottom, we can check left and top directions, and we need another iteration from bottom to top to check for right and bottom direction.</p>
+Algorithm</strong></p>
+
+Iterate the matrix from top to bottom-left to right:</li>
+Update
+  <span class="maths katex-rendered">d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>]</mo>=</mo>min</mi>(</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>]</mo>,</mo>min</mi>(</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>−</mo>1</mn>]</mo>,</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>−</mo>1</mn>]</mo>[</mo>j</mi>]</mo>)</mo>+</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">text{dist}[i][j]=min(text{dist}[i][j],min(text{dist}[i][j-1],text{dist}[i-1][j])+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>=</span>min</span>(</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>,</span>min</span>(</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>−</span><span class="mord mathrm">1</span>]</span>,</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>−</span><span class="mord mathrm">1</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>)</span>+</span><span class="mord mathrm">1</span>)</span></span></span></span></span>
+  i.e., minimum of the current dist and distance from top or left neighbour +1, that would have been already calculated previously in the current iteration.</li>
+Now, we need to do the back iteration in the similar manner: from bottom to top-right to left:</li>
+Update
+  <span class="maths katex-rendered">d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>]</mo>=</mo>min</mi>(</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>]</mo>,</mo>min</mi>(</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>]</mo>[</mo>j</mi>+</mo>1</mn>]</mo>,</mo>d</mi>i</mi>s</mi>t</mi></mtext>[</mo>i</mi>+</mo>1</mn>]</mo>[</mo>j</mi>]</mo>)</mo>+</mo>1</mn>)</mo></mrow><annotation encoding="application/x-tex">text{dist}[i][j]=min(text{dist}[i][j],min(text{dist}[i][j+1],text{dist}[i+1][j])+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>=</span>min</span>(</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>,</span>min</span>(</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>+</span><span class="mord mathrm">1</span>]</span>,</span><span class="mord text textstyle uncramped"><span class="mord mathrm">dist</span></span>[</span><span class="mord mathit">i</span>+</span><span class="mord mathrm">1</span>]</span>[</span><span class="mord mathit" style="margin-right: 0.05724em;">j</span>]</span>)</span>+</span><span class="mord mathrm">1</span>)</span></span></span></span></span>
+  i.e. minimum of current dist and distances calculated from bottom and right neighbours, that would be already available in current iteration.</li>
+</ul>
+C++</strong></p>
+</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> updateMatrix</span>(</span>vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;&amp;</span> matrix</span>)</span>
+{</span>
+    int</span> rows</span> =</span> matrix</span>.</span>size</span>();</span>
+    if</span> (</span>rows</span> ==</span> 0</span>)</span>
+        return</span> matrix</span>;</span>
+    int</span> cols</span> =</span> matrix</span>[</span>0</span>].</span>size</span>();</span>
+    vector</span>&lt;</span>vector</span>&lt;</span>int</span>&gt;</span> &gt;</span> dist</span>(</span>rows</span>,</span> vector</span>&lt;</span>int</span>&gt;</span>(</span>cols</span>,</span> INT_MAX</span> -</span> 100000</span>));</span>
+
+    //First pass: check for left and top</span>
+    for</span> (</span>int</span> i</span> =</span> 0</span>;</span> i</span> &lt;</span> rows</span>;</span> i</span>++</span>)</span> {</span>
+        for</span> (</span>int</span> j</span> =</span> 0</span>;</span> j</span> &lt;</span> cols</span>;</span> j</span>++</span>)</span> {</span>
+            if</span> (</span>matrix</span>[</span>i</span>][</span>j</span>]</span> ==</span> 0</span>)</span>
+                dist</span>[</span>i</span>][</span>j</span>]</span> =</span> 0</span>;</span>
+            else</span> {</span>
+                if</span> (</span>i</span> &gt;</span> 0</span>)</span>
+                    dist</span>[</span>i</span>][</span>j</span>]</span> =</span> min</span>(</span>dist</span>[</span>i</span>][</span>j</span>],</span> dist</span>[</span>i</span> -</span> 1</span>][</span>j</span>]</span> +</span> 1</span>);</span>
+                if</span> (</span>j</span> &gt;</span> 0</span>)</span>
+                    dist</span>[</span>i</span>][</span>j</span>]</span> =</span> min</span>(</span>dist</span>[</span>i</span>][</span>j</span>],</span> dist</span>[</span>i</span>][</span>j</span> -</span> 1</span>]</span> +</span> 1</span>);</span>
+            }</span>
+        }</span>
+    }</span>
+
+    //Second pass: check for bottom and right</span>
+    for</span> (</span>int</span> i</span> =</span> rows</span> -</span> 1</span>;</span> i</span> &gt;=</span> 0</span>;</span> i</span>--</span>)</span> {</span>
+        for</span> (</span>int</span> j</span> =</span> cols</span> -</span> 1</span>;</span> j</span> &gt;=</span> 0</span>;</span> j</span>--</span>)</span> {</span>
+            if</span> (</span>i</span> &lt;</span> rows</span> -</span> 1</span>)</span>
+                dist</span>[</span>i</span>][</span>j</span>]</span> =</span> min</span>(</span>dist</span>[</span>i</span>][</span>j</span>],</span> dist</span>[</span>i</span> +</span> 1</span>][</span>j</span>]</span> +</span> 1</span>);</span>
+            if</span> (</span>j</span> &lt;</span> cols</span> -</span> 1</span>)</span>
+                dist</span>[</span>i</span>][</span>j</span>]</span> =</span> min</span>(</span>dist</span>[</span>i</span>][</span>j</span>],</span> dist</span>[</span>i</span>][</span>j</span> +</span> 1</span>]</span> +</span> 1</span>);</span>
+        }</span>
+    }</span>
+
+    return</span> dist</span>;</span>
+}</span>
+</pre></div>
+
+
+Complexity analysis</strong></p>
+
+Time complexity: <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span>. 2 passes of <span class="maths katex-rendered">r</mi>⋅</mo>c</mi></mrow><annotation encoding="application/x-tex">r cdot c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.44445em;"></span><span class="strut bottom" style="height: 0.44445em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span></span></span></span></span> each</li>
+Space complexity: <span class="maths katex-rendered">O</mi>(</mo>r</mi>⋅</mo>c</mi>)</mo></mrow><annotation encoding="application/x-tex">O(r cdot c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right: 0.02778em;">O</span>(</span><span class="mord mathit" style="margin-right: 0.02778em;">r</span>⋅</span><span class="mord mathit">c</span>)</span></span></span></span></span>. No additional space required than dist vector&lt;vector&lt;int&gt; &gt;</code></li>
+</ul>
+
+Analysis written by <a href="https://leetcode.com/abhinavbansal0">@abhinavbansal0</a>.</p>

@@ -1,0 +1,48 @@
+<div class="toc hide">
+
+<a href="#solution">Solution</a>
+<a href="#approach-i-using-group-by-and-a-temporary-table-accepted">Approach I: Using GROUP BY and a temporary table [Accepted]</a></li>
+<a href="#approach-ii-using-group-by-and-having-condition-accepted">Approach II: Using GROUP BY and HAVING condition [Accepted]</a></li>
+</ul>
+</li>
+</ul>
+</div>
+Solution</h2>
+
+<h4 id="approach-i-using-group-by-and-a-temporary-table-accepted">Approach I: Using GROUP BY</code> and a temporary table [Accepted]</h4>
+Algorithm</strong></p>
+Duplicated emails existed more than one time. To count the times each email exists, we can use the following code.</p>
+</span>select</span> Email</span>,</span> count</span>(</span>Email</span>)</span> as</span> num</span>
+from</span> Person</span>
+group</span> by</span> Email</span>;</span>
+</pre></div>
+
+
+</span>| Email   | num |
+|---------|-----|
+| a@b.com | 2   |
+| c@d.com | 1   |
+</pre></div>
+
+
+Taking this as a temporary table, we can get a solution as below.</p>
+</span>select</span> Email</span> from</span>
+(</span>
+  select</span> Email</span>,</span> count</span>(</span>Email</span>)</span> as</span> num</span>
+  from</span> Person</span>
+  group</span> by</span> Email</span>
+)</span> as</span> statistic</span>
+where</span> num</span> &gt;</span> 1</span>
+;</span>
+</pre></div>
+
+
+<h4 id="approach-ii-using-group-by-and-having-condition-accepted">Approach II: Using GROUP BY</code> and HAVING</code> condition [Accepted]</h4>
+A more common used way to add a condition to a GROUP BY</code> is to use the HAVING</code> clause, which is much simpler and more efficient.</p>
+So we can rewrite the above solution to this one.</p>
+MySQL</strong></p>
+</span>select</span> Email</span>
+from</span> Person</span>
+group</span> by</span> Email</span>
+having</span> count</span>(</span>Email</span>)</span> &gt;</span> 1</span>;</span>
+</pre></div>
