@@ -3,6 +3,7 @@ from selenium import webdriver
 import os
 from time import sleep
 import platform
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import re
 
 
@@ -15,9 +16,8 @@ binary = FirefoxBinary('C:\\Program Files\\Mozilla Firefox\\firefox.exe')
 driver = webdriver.Firefox(firefox_binary = binary)
 """
 
-options = webdriver.ChromeOptions()
-options.binary_location = '/usr/bin/google-chrome-beta'
-driver = webdriver.Chrome(chrome_options = options)
+driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
+                                           desired_capabilities=DesiredCapabilities.CHROME)
 
 driver.implicitly_wait(3)
 
@@ -39,9 +39,10 @@ for option in show_all_elements.find_elements_by_tag_name('option'):
 problem_parent = driver.find_element_by_css_selector("""#question-app > div > div:nth-child(2) > div.question-list-base > div.table-responsive.question-list-table > table > tbody.reactable-data""")
 problems_raw = problem_parent.find_elements_by_tag_name('tr')
 #print(problems)
-pNumber = 156
+pNumber = 165
 
 while(True):
+    driver.implicitly_wait(2)
     problem_parent = driver.find_element_by_css_selector(
         """#question-app > div > div:nth-child(2) > div.question-list-base > div.table-responsive.question-list-table > table > tbody.reactable-data""")
     problems_raw = problem_parent.find_elements_by_tag_name('tr')
@@ -51,41 +52,44 @@ while(True):
     problem = problem2.find_element_by_tag_name('a')
 
     print(problem)
-
-
-
     problem.click()
 
+    if "https://leetcode.com/accounts/login/" in driver.current_url:
+        driver.back()
+        pNumber += 1
+    else:
+        descText = driver.find_element_by_xpath('//*[@id="descriptionContent"]/div[1]/div/div[2]')
 
-    descText = driver.find_element_by_xpath('//*[@id="descriptionContent"]/div[1]/div/div[2]')
+        p_file_name = 'data/p' + str(pNumber) + '.txt'
 
-    p_file_name = 'data/p' + str(pNumber) + '.txt'
-
-    with open(p_file_name, 'w') as w:
-        w.write(descText.text)
-
-
-    solutionTab = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[1]/nav/a[5]')
-    solutionTab.click()
-    solution = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[2]/div/div[2]/div[1]/div')
-    '//*[@id="descriptionContent"]/div[1]/div/div[2]'
-
-    s_file_name = 's' + str(pNumber) + '.txt'
-
-    #strippedSolution = solution.get_attribute('innerHTML')
-    #strippedSolution = strippedSolution.replace(u"\u2212", "- ")
-
-    solution_text = solution.get_attribute('innerHTML')
-
-    solution_text = re.sub('<\w*\s*(\w+=\"(\w+\s*|\w+-\w+)\")*>', "", solution_text)
-    solution_text = solution_text.replace("\\", "")
-
-    print(solution_text)
+        with open(p_file_name, 'w') as w:
+            w.write(descText.text)
 
 
-    with open(s_file_name, 'w') as w:
-        w.write(solution_text)
+        try:
+            solutionTab = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[1]/nav/a[5]')
+            solutionTab.click()
+            solution = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[2]/div/div[2]/div[1]/div')
+            '//*[@id="descriptionContent"]/div[1]/div/div[2]'
 
-    driver.back()
-    driver.implicitly_wait(2)
+            s_file_name = 'data/s' + str(pNumber) + '.txt'
+
+            #strippedSolution = solution.get_attribute('innerHTML')
+            #strippedSolution = strippedSolution.replace(u"\u2212", "- ")
+
+            solution_text = solution.get_attribute('innerHTML')
+
+            solution_text = re.sub('<\w*\s*(\w+=\"(\w+\s*|\w+-\w+)\")*>', "", solution_text)
+            solution_text = solution_text.replace("\\", "")
+
+            print(solution_text)
+
+
+            with open(s_file_name, 'w') as w:
+                w.write(solution_text)
+        except:
+            print("No solution")
+
+    driver.get('https://leetcode.com/problemset/all/')
+    driver.implicitly_wait(4)
     pNumber += 1
