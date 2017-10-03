@@ -55,9 +55,15 @@ def getProblem(pNumber: int):
                                             > div.table-responsive.question-list-table > table > tbody.reactable-data""")
     problems_raw = problem_parent.find_elements_by_tag_name('tr')
 
-    problem1 = problems_raw[pNumber - 1].find_elements_by_tag_name('td')[2]
-    problem2 = problem1.find_element_by_tag_name('div')
-    problem = problem2.find_element_by_tag_name('a')
+    # Each problem is nested...
+    # Get the <td> element containing everything we need
+    problemTD = problems_raw[pNumber - 1].find_elements_by_tag_name('td')[2]
+
+    # Get the div containing everything we need from the td element above
+    problemDIV = problemTD.find_element_by_tag_name('div')
+
+    # Get the actual element that we can click on
+    problem = problemDIV.find_element_by_tag_name('a')
     problem.click()
 
     print("----> Clicking on problem")
@@ -87,6 +93,7 @@ def writeToFile(pNumber: int):
     :return: Nothing
     """
 
+    # If this problem is a premium problem, leetcode redirects to a login page
     if "https://leetcode.com/accounts/login/" in driver.current_url:
         driver.back()
         driver.implicitly_wait(3)
@@ -94,19 +101,25 @@ def writeToFile(pNumber: int):
     else:
 
         print("----> Getting description text")
+
+        # Get the element containing the description
         descText = driver.find_element_by_xpath('//*[@id="descriptionContent"]/div[1]/div/div[2]')
 
         p_file_name = 'data/p' + str(pNumber).zfill(3) + '.txt'
 
-        with open(p_file_name, 'w') as w:
-            w.write(descText.text)
+        with open(p_file_name, 'w') as description_file:
+            description_file.write(descText.text)
 
 
         try:
 
             print("----> Attempting to get solution")
+
+            # Solutions are in a separate "tab" in the web page, so let's switch to that
             solutionTab = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[1]/nav/a[5]')
             solutionTab.click()
+
+            # Get the actual element containing the solution
             solution = driver.find_element_by_xpath('//*[@id="tab-view-app"]/div/div[2]/div/div[2]/div[1]/div')
             '//*[@id="descriptionContent"]/div[1]/div/div[2]'
 
