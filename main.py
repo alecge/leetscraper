@@ -3,6 +3,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 """
+This is an example of using Firefox on windows
+
 binary = FirefoxBinary('C:\\Program Files\\Mozilla Firefox\\firefox.exe')
 
 driver = webdriver.Firefox(firefox_binary = binary)
